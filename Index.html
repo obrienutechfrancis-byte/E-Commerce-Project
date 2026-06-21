@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JIPO – Jamaica Intellectual Property Office</title>
+<meta name="description" content="Jamaica's official intellectual property registry. Register trademarks, patents, and creative works entirely online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================================================
+     SHARED HEADER
+================================================ -->
+<header>
+  <nav class="navbar">
+    <div class="logo-wrap" onclick="showPage('home')">
+      <div class="logo-mark">JIPO</div>
+      <div class="logo-text">Jamaica IP Office <span>Protecting Innovation</span></div>
+    </div>
+    <ul id="mainNav">
+      <li><a href="#" onclick="showPage('home');return false;" class="active-link">Home</a></li>
+      <li><a href="#" onclick="showPage('home');scrollToId('services');return false;">Services</a></li>
+      <li><a href="#" onclick="showPage('home');scrollToId('wizard-sec');return false;">Should I Register?</a></li>
+      <li><a href="#" onclick="showPage('home');scrollToId('tracker-sec');return false;">Track Application</a></li>
+      <li><a href="#" onclick="showPage('about');return false;">About JIPO</a></li>
+    </ul>
+    <button class="nav-search-btn" onclick="openSearch()" aria-label="Search the site" title="Search">🔍</button>
+    <div class="nav-auth" id="navAuth">
+      <button class="btn-nav-login" onclick="showPage('login')">Log In</button>
+      <button class="btn-nav-register" onclick="showPage('register')">Register</button>
+    </div>
+    <div class="nav-auth hidden" id="navPortal">
+      <span style="color:rgba(255,255,255,.7);font-size:.85rem" id="navUsername"></span>
+      <button class="btn-nav-login" onclick="showPage('portal')">My Portal</button>
+      <button class="btn-nav-login" onclick="logout()">Sign Out</button>
+    </div>
+    <button class="hamburger" onclick="openMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" onclick="closeMobileMenu(event)">
+  <div class="mobile-drawer">
+    <button class="drawer-close" onclick="closeMobileMenu()">✕</button>
+    <a href="#" onclick="showPage('home');closeMobileMenu()">Home</a>
+    <a href="#" onclick="showPage('home');scrollToId('services');closeMobileMenu()">Services</a>
+    <a href="#" onclick="showPage('home');scrollToId('wizard-sec');closeMobileMenu()">Should I Register?</a>
+    <a href="#" onclick="showPage('home');scrollToId('tracker-sec');closeMobileMenu()">Track Application</a>
+    <a href="#" onclick="showPage('about');closeMobileMenu()">About JIPO</a>
+    <a href="#" onclick="closeMobileMenu();openSearch()">🔍 Search</a>
+    <hr style="border-color:rgba(255,255,255,.15);margin:8px 0">
+    <a href="#" onclick="showPage('login');closeMobileMenu()">Log In</a>
+    <a href="#" onclick="showPage('register');closeMobileMenu()" style="color:var(--gold);font-weight:700">Register Free</a>
+  </div>
+</div>
+
+<!-- ================================================
+     SITE SEARCH OVERLAY
+================================================ -->
+<div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+  <div class="search-panel">
+    <div class="search-bar">
+      <span class="search-bar-icon">🔍</span>
+      <input type="text" id="siteSearchInput" placeholder="Search services, fees, FAQs, news…" autocomplete="off" />
+      <button class="search-close" onclick="closeSearch()" aria-label="Close search">✕</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <p class="search-hint">Start typing to search across the JIPO website.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================
+     HOME PAGE
+================================================ -->
+<div class="page active" id="page-home">
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Official Government Portal — Jamaica</div>
+      <h1>Protect Your <em>Ideas.</em><br>Build Your Future.</h1>
+      <p class="hero-sub">Jamaica's official intellectual property registry. Register trademarks, patents, and creative works — entirely online, from anywhere.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('register')">Create a Free Account</button>
+        <button class="btn-outline" onclick="scrollToId('services')">Explore Services</button>
+      </div>
+    </div>
+    <div class="wizard-card">
+      <h3>Not sure where to start?</h3>
+      <p>Tell us what you're protecting and we'll point you in the right direction.</p>
+      <div class="wizard-options">
+        <button class="wizard-opt" onclick="showPage('home');scrollToId('wizard-sec')">
+          <span class="opt-icon">🏷️</span>
+          <div class="opt-text"><strong>Brand or Business Name</strong><span>Logos, names, slogans</span></div>
+        </button>
+        <button class="wizard-opt" onclick="showPage('home');scrollToId('wizard-sec')">
+          <span class="opt-icon">💡</span>
+          <div class="opt-text"><strong>Invention or Product</strong><span>New technologies, devices</span></div>
+        </button>
+        <button class="wizard-opt" onclick="showPage('home');scrollToId('wizard-sec')">
+          <span class="opt-icon">🎨</span>
+          <div class="opt-text"><strong>Creative Work</strong><span>Music, art, writing, software</span></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">14,200+</div><div class="stat-label">Trademarks Registered</div></div>
+    <div class="stat-item"><div class="stat-num">3,800+</div><div class="stat-label">Patents Filed</div></div>
+    <div class="stat-item"><div class="stat-num">7,500+</div><div class="stat-label">Copyrights Protected</div></div>
+    <div class="stat-item"><div class="stat-num">99%</div><div class="stat-label">Online Processing</div></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">What We Offer</div>
+      <h2>Our Core Services</h2>
+      <p>End-to-end IP protection for creators, entrepreneurs, and businesses in Jamaica and beyond.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏷️</div>
+        <h3>Trademark Registration</h3>
+        <p>Protect your brand name, logo, or slogan from unauthorised use. Build a legally recognised identity in Jamaica.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$5,000</strong></li>
+          <li><span>Registration Fee</span><strong>J$10,000</strong></li>
+          <li><span>Renewal Fee</span><strong>J$8,500</strong></li>
+        </ul>
+        <div class="service-link">Start filing <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <h3>Patent Protection</h3>
+        <p>Secure exclusive rights to your invention for up to 20 years. Prevent others from making, using, or selling your innovation.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$8,000</strong></li>
+          <li><span>Registration Fee</span><strong>J$15,000</strong></li>
+          <li><span>Renewal Fee</span><strong>J$12,000</strong></li>
+        </ul>
+        <div class="service-link">Learn more <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">©️</div>
+        <h3>Copyright Services</h3>
+        <p>Copyright arises automatically, but voluntary registration strengthens your legal position for music, art, and writing.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$2,500</strong></li>
+          <li><span>Registration Fee</span><strong>J$5,000</strong></li>
+          <li><span>Renewal Fee</span><strong>N/A</strong></li>
+        </ul>
+        <div class="service-link">Register a work <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Industrial Designs</h3>
+        <p>Protect the unique visual appearance of your product — its shape, colour, or pattern — and prevent counterfeit copies.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$4,000</strong></li>
+          <li><span>Registration Fee</span><strong>J$8,000</strong></li>
+          <li><span>Renewal Fee</span><strong>J$6,500</strong></li>
+        </ul>
+        <div class="service-link">File a design <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>IP Search Database</h3>
+        <p>Search existing trademarks, patents, and designs before you apply to avoid conflicts and save time and money.</p>
+        <ul class="service-fees">
+          <li><span>Basic Search</span><strong>Free</strong></li>
+          <li><span>Certified Search Report</span><strong>J$3,000</strong></li>
+        </ul>
+        <div class="service-link">Search now <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3>IP Enforcement Guidance</h3>
+        <p>If your rights are being infringed, we explain your legal options and connect you with enforcement resources.</p>
+        <ul class="service-fees">
+          <li><span>Advisory Consultation</span><strong>Free</strong></li>
+          <li><span>Formal Opposition Filing</span><strong>J$7,500</strong></li>
+        </ul>
+        <div class="service-link">Get support <span>→</span></div>
+      </div>
+    </div>
+    <p class="services-fee-note">All fees are in Jamaican Dollars (JMD) and can be paid directly from your account wallet. Fees are subject to change.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">The Process</div>
+      <h2>Filing in Four Steps</h2>
+      <p>Everything online. No branch visit required.</p>
+    </div>
+    <div class="steps-wrap">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <h3>Create Account</h3>
+        <p>Register free on e-JIPO. Your account stores all applications, certificates, and renewal dates in one place.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <h3>Search &amp; Check</h3>
+        <p>Use our database to confirm your mark or invention is unique before investing in the full registration fee.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <h3>Submit Online</h3>
+        <p>Complete your application and pay securely using your account wallet — no physical documents needed.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <h3>Receive Certificate</h3>
+        <p>We examine and process your application then issue your certificate. Track every step in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIZARD SECTION -->
+<section class="wizard-section" id="wizard-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Interactive Guide</div>
+      <h2>Should I Register My IP?</h2>
+      <p>Answer three quick questions and we'll tell you exactly what protection you need.</p>
+    </div>
+    <div class="wizard-widget">
+      <div class="wizard-progress"><div class="wizard-progress-bar" id="wizardProgress" style="width:0%"></div></div>
+      <div class="wizard-step active" id="wstep1">
+        <div class="wizard-question">What type of IP are you looking to protect?</div>
+        <div class="wizard-hint">Select the option that best describes your situation.</div>
+        <div class="wizard-choices">
+          <button class="wiz-choice" onclick="wizNext(2,'brand')"><div class="wc-icon">🏷️</div><strong>Brand / Identity</strong><span>Name, logo, slogan, packaging</span></button>
+          <button class="wiz-choice" onclick="wizNext(2,'invention')"><div class="wc-icon">⚙️</div><strong>Invention</strong><span>Device, process, formula</span></button>
+          <button class="wiz-choice" onclick="wizNext(2,'creative')"><div class="wc-icon">🎨</div><strong>Creative Work</strong><span>Music, art, writing, software</span></button>
+          <button class="wiz-choice" onclick="wizNext(2,'design')"><div class="wc-icon">📐</div><strong>Product Design</strong><span>Shape, colour, pattern</span></button>
+        </div>
+      </div>
+      <div class="wizard-step" id="wstep2">
+        <div class="wizard-question">Is your work already in public use?</div>
+        <div class="wizard-hint">This affects how urgently you should file.</div>
+        <div class="wizard-choices">
+          <button class="wiz-choice" onclick="wizNext(3,'yes')"><div class="wc-icon">✅</div><strong>Yes</strong><span>Already trading, performing, or publishing</span></button>
+          <button class="wiz-choice" onclick="wizNext(3,'no')"><div class="wc-icon">🔜</div><strong>Not yet</strong><span>Still in development or planning</span></button>
+        </div>
+      </div>
+      <div class="wizard-step" id="wstep3">
+        <div class="wizard-question">Do you need protection beyond Jamaica?</div>
+        <div class="wizard-hint">International filings involve different processes and timelines.</div>
+        <div class="wizard-choices">
+          <button class="wiz-choice" onclick="wizResult()"><div class="wc-icon">🌍</div><strong>Yes — internationally</strong><span>I plan to export or sell abroad</span></button>
+          <button class="wiz-choice" onclick="wizResult()"><div class="wc-icon">🇯🇲</div><strong>Jamaica only</strong><span>Domestic protection is sufficient</span></button>
+        </div>
+      </div>
+      <div class="wizard-step" id="wstep-result">
+        <div class="wizard-result">
+          <h3 id="wizardResultTitle">Our Recommendation</h3>
+          <p id="wizardResultText"></p>
+          <button class="btn-green" onclick="showPage('register')">Register Now to Apply</button>
+        </div>
+        <button class="wizard-restart" onclick="resetWizard()">← Start Over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION TRACKER -->
+<section class="tracker-section" id="tracker-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">After You File</div>
+      <h2>Track Your Application</h2>
+      <p>Enter your application reference number to see real-time status and next steps.</p>
+    </div>
+    <div class="tracker-widget">
+      <div class="tracker-form">
+        <input type="text" id="trackInput" placeholder="e.g. TM-2025-04821" />
+        <button onclick="trackApplication()">Track</button>
+      </div>
+      <div class="tracker-result" id="trackerResult"></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ACCESS — each item scrolls/navigates to its section -->
+<section class="quick-links-sec" id="quick-links">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Quick Access</div>
+      <h2>Everything You Need</h2>
+      <p>Common tasks, one click away.</p>
+    </div>
+    <div class="ql-grid">
+      <div class="ql-item" onclick="showPage('register')">
+        <div class="ql-icon">📂</div><span>Online Filing</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('services')">
+        <div class="ql-icon">🔍</div><span>Search Database</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('how-it-works')">
+        <div class="ql-icon">📄</div><span>Download Forms</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('services')">
+        <div class="ql-icon">💰</div><span>Fees &amp; Services</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('faq-sec')">
+        <div class="ql-icon">❓</div><span>FAQs</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('tracker-sec')">
+        <div class="ql-icon">📍</div><span>Track Application</span>
+      </div>
+      <div class="ql-item" onclick="currentUser?showPage('portal'):showPage('login')">
+        <div class="ql-icon">🔔</div><span>Renewal Reminders</span>
+      </div>
+      <div class="ql-item" onclick="toggleChat()">
+        <div class="ql-icon">📞</div><span>Contact Us</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQs -->
+<section style="background:var(--surface);padding:80px 5%;" id="faq-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Help</div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px;">
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          How long does trademark registration take? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">Trademark examination typically takes 3–6 months once the application is submitted. The total process from filing to registration can take 8–12 months if no objections are raised.</p>
+      </details>
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Do I need a lawyer to file a patent? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">You can file a patent yourself, but we recommend engaging a registered patent attorney for complex inventions. JIPO's e-filing system guides you through each step, and our staff are available to answer general process questions.</p>
+      </details>
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          How do I load funds to my account wallet? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">Log in to your Client Portal and click "Top Up Wallet" on the Wallet tab. You can add funds by credit/debit card, bank transfer, or NCB QuickPay. Funds are credited instantly and can be used to pay filing and registration fees.</p>
+      </details>
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Can I register IP internationally through JIPO? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">Yes. Jamaica is a member of the Paris Convention and the PCT Network, allowing Jamaican filers to seek protection in over 180 countries. JIPO can advise you on the Madrid System for international trademark registration and the Patent Cooperation Treaty for patents.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news-sec" id="news-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Updates</div>
+      <h2>Latest News &amp; Events</h2>
+    </div>
+  </div>
+  <div class="news-wrapper">
+    <div class="news-track" id="newsTrack"></div>
+  </div>
+</section>
+
+<!-- FEEDBACK & RATINGS -->
+<section class="feedback-sec" id="feedback-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Your Opinion Matters</div>
+      <h2>Share Your Feedback</h2>
+      <p>Help us improve our services. Rate your experience and tell us what you think.</p>
+    </div>
+    <div class="feedback-wrap">
+      <div class="feedback-form" id="feedbackForm">
+        <div class="form-group">
+          <label class="form-label">How would you rate your experience?</label>
+          <div class="star-rating" id="starRating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <div class="rating-label" id="ratingLabel">Tap a star to rate</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fbName">Name (optional)</label>
+          <input type="text" class="form-input" id="fbName" placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fbMessage">Your feedback</label>
+          <textarea class="form-input" id="fbMessage" rows="4" placeholder="Tell us about your experience or how we can improve…"></textarea>
+        </div>
+        <button class="btn-green feedback-submit" onclick="submitFeedback()">Submit Feedback</button>
+        <div class="feedback-success" id="feedbackSuccess">✅ Thank you! Your feedback has been received.</div>
+      </div>
+      <div class="feedback-side">
+        <div class="rating-summary">
+          <div class="rating-big" id="avgRating">4.8</div>
+          <div class="rating-stars-static" id="avgStars">★★★★★</div>
+          <div class="rating-count" id="ratingCount">Based on 1,240+ reviews</div>
+        </div>
+        <div class="recent-reviews" id="recentReviews">
+          <div class="review-item">
+            <div class="review-head"><strong>Andre M.</strong><span class="review-stars">★★★★★</span></div>
+            <p>Filed my trademark entirely online in under an hour. The wallet feature made paying so easy.</p>
+          </div>
+          <div class="review-item">
+            <div class="review-head"><strong>Keisha B.</strong><span class="review-stars">★★★★★</span></div>
+            <p>The IP wizard pointed me to exactly the right protection for my music. Excellent service.</p>
+          </div>
+          <div class="review-item">
+            <div class="review-head"><strong>Devon P.</strong><span class="review-stars">★★★★☆</span></div>
+            <p>Very helpful staff and a clear process. Tracking my patent application in real time was great.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="section-inner">
+    <div class="newsletter-inner">
+      <h2>Stay Informed</h2>
+      <p>Get IP tips, renewal reminders, and JIPO updates delivered to your inbox. Unsubscribe any time.</p>
+      <div class="nl-form">
+        <input type="email" id="nlEmail" placeholder="Enter your email address" />
+        <button onclick="subscribeNewsletter()">Subscribe</button>
+      </div>
+      <div class="nl-success" id="nlSuccess">✅ You're subscribed! Check your inbox for a confirmation.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="color:white;font-weight:700;font-size:1rem;margin-bottom:12px;">Jamaica Intellectual Property Office</div>
+        <p>Protecting innovation, creativity, and investment in Jamaica since 1999. Part of the Ministry of Industry, Investment &amp; Commerce.</p>
+        <div class="footer-social">
+          <div class="social-btn">f</div><div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#" onclick="scrollToId('services');return false;">Trademark Registration</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Patent Filing</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Copyright</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Industrial Designs</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">IP Search Database</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('register');return false;">Online Filing (e-JIPO)</a></li>
+          <li><a href="#" onclick="scrollToId('how-it-works');return false;">Application Forms</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Fees &amp; Services</a></li>
+          <li><a href="#" onclick="scrollToId('faq-sec');return false;">FAQs</a></li>
+          <li><a href="#" onclick="scrollToId('news-sec');return false;">News &amp; Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">18 Trafalgar Road, Kingston 10</a></li>
+          <li><a href="#">+1 876-946-1114</a></li>
+          <li><a href="#">info@jipo.gov.jm</a></li>
+          <li><a href="#">Mon–Fri, 8am–5pm</a></li>
+          <li><a href="#" onclick="showPage('about');return false;">About JIPO</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Jamaica Intellectual Property Office. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div><!-- /page-home -->
+
+
+<!-- ================================================
+     ABOUT PAGE
+================================================ -->
+<div class="page" id="page-about">
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <div class="hero-eyebrow">Established 1999 · Kingston, Jamaica</div>
+    <h1>Built on <em>Expertise.</em><br>Driven by Purpose.</h1>
+    <p>The Jamaica Intellectual Property Office is the government authority responsible for administering and promoting intellectual property rights in Jamaica. We combine deep legal expertise, technical knowledge, and a commitment to public service to protect innovation across every sector of the Jamaican economy.</p>
+  </div>
+</section>
+<div class="mv-strip">
+  <div class="mv-inner">
+    <div class="mv-block">
+      <div class="mv-label">Our Mission</div>
+      <h2>Administer IP rights with integrity, efficiency, and expertise.</h2>
+      <p>To provide a world-class intellectual property system that supports economic growth, encourages innovation, and ensures Jamaican creators and businesses can protect and benefit from their ideas — at home and internationally.</p>
+    </div>
+    <div class="mv-block">
+      <div class="mv-label">Our Vision</div>
+      <h2>A Jamaica where every idea is valued and protected.</h2>
+      <p>We envision a nation where intellectual property is understood, respected, and actively used as a tool for economic development — where every artist, inventor, and entrepreneur knows their rights and can exercise them with confidence.</p>
+    </div>
+  </div>
+</div>
+<section class="who-we-are">
+  <div class="section-inner who-inner">
+    <div class="who-text">
+      <h2>Who We Are</h2>
+      <p>JIPO is a government statutory body established under the <strong>Jamaica Intellectual Property Office Act</strong>. We operate under the Ministry of Industry, Investment and Commerce and are Jamaica's official authority for the registration and administration of trademarks, patents, industrial designs, copyright, and geographical indications.</p>
+      <p>Our team includes qualified <strong>intellectual property attorneys</strong>, patent examiners, trademark examiners, copyright officers, and outreach specialists — all working together to ensure Jamaica's IP system is accessible, modern, and aligned with international standards.</p>
+      <div class="who-badge-grid">
+        <div class="who-badge"><div class="wb-num">25+</div><div class="wb-label">Years in operation</div></div>
+        <div class="who-badge"><div class="wb-num">40+</div><div class="wb-label">Expert staff members</div></div>
+        <div class="who-badge"><div class="wb-num">180+</div><div class="wb-label">Countries we connect with</div></div>
+        <div class="who-badge"><div class="wb-num">99%</div><div class="wb-label">Online processing rate</div></div>
+      </div>
+    </div>
+    <div class="who-visual">
+      <div class="timeline-item"><div class="tl-year-dot">1999</div><div class="tl-content"><h4>JIPO Established</h4><p>The Jamaica Intellectual Property Office Act creates a dedicated statutory body to administer IP rights in Jamaica.</p></div></div>
+      <div class="timeline-item"><div class="tl-year-dot">2004</div><div class="tl-content"><h4>TRIPS Alignment</h4><p>Full legislative alignment with the WTO's TRIPS Agreement, opening Jamaican filings to international reciprocity.</p></div></div>
+      <div class="timeline-item"><div class="tl-year-dot">2012</div><div class="tl-content"><h4>Digital Filing Launched</h4><p>First-generation online trademark and patent filing system launched, reducing processing time by 60%.</p></div></div>
+</section>
+<section class="leadership-sec" id="leadership-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Our Leadership</div>
+      <h2>Guided by Experts</h2>
+      <p>JIPO is led by a team of seasoned professionals with decades of combined experience in intellectual property law, examination, and public administration.</p>
+    </div>
+    <div class="leadership-grid">
+      <div class="leader-card">
+        <div class="leader-avatar">DC</div>
+        <h3>Dr. Carla Reid</h3>
+        <div class="leader-role">Director General</div>
+        <p>An attorney-at-law with over 20 years in intellectual property and commercial law, Dr. Reid oversees JIPO's strategic direction and international engagement. She holds a doctorate in IP law and has represented Jamaica at WIPO assemblies.</p>
+        <ul class="leader-expertise">
+          <li>IP Policy &amp; Strategy</li>
+          <li>International Treaties</li>
+          <li>Commercial Law</li>
+        </ul>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">MB</div>
+        <h3>Marcus Bennett</h3>
+        <div class="leader-role">Deputy Director, Patents &amp; Designs</div>
+        <p>A registered patent examiner and former engineer, Marcus leads the technical examination of patents and industrial designs. His background in mechanical engineering brings rigour to prior-art assessment and innovation support for inventors.</p>
+        <ul class="leader-expertise">
+          <li>Patent Examination</li>
+          <li>Industrial Designs</li>
+          <li>Technical Assessment</li>
+        </ul>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">ST</div>
+        <h3>Simone Thompson</h3>
+        <div class="leader-role">Head of Trademarks &amp; Copyright</div>
+        <p>Simone manages the trademark and copyright divisions, ensuring fast, fair examination for Jamaican creators and businesses. She specialises in brand protection and has led JIPO's outreach programmes for MSMEs and the creative sector.</p>
+        <ul class="leader-expertise">
+          <li>Trademark Law</li>
+          <li>Copyright &amp; Creative Sector</li>
+          <li>Public Outreach</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="partnerships">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">International Affiliations</div>
+      <h2>Who We Work With</h2>
+      <p>JIPO is connected to the global IP ecosystem through membership and partnerships with leading international bodies.</p>
+    </div>
+    <div class="partner-logos">
+      <div class="partner-badge">🌐 WIPO</div>
+      <div class="partner-badge">⚖️ WTO / TRIPS</div>
+      <div class="partner-badge">🇯🇲 GOJ — MIIC</div>
+      <div class="partner-badge">🌍 Paris Convention</div>
+      <div class="partner-badge">📚 Berne Convention</div>
+      <div class="partner-badge">🏝️ CARICOM</div>
+      <div class="partner-badge">🔬 PCT Network</div>
+      <div class="partner-badge">🎵 JACAP</div>
+    </div>
+  </div>
+</section>
+<section class="about-cta">
+  <h2>Ready to Protect Your IP?</h2>
+  <p>Join thousands of Jamaican creators, entrepreneurs, and businesses who trust JIPO to secure their most valuable assets.</p>
+  <div class="about-cta-actions">
+    <button class="btn-primary" onclick="showPage('register')">Create a Free Account</button>
+    <button class="btn-outline" onclick="showPage('home');scrollToId('wizard-sec')">Take the IP Wizard</button>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="color:white;font-weight:700;font-size:1rem;margin-bottom:12px;">Jamaica Intellectual Property Office</div>
+        <p>Protecting innovation, creativity, and investment in Jamaica since 1999.</p>
+        <div class="footer-social">
+          <div class="social-btn">f</div><div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div><h4>Services</h4><ul><li><a href="#">Trademark Registration</a></li><li><a href="#">Patent Filing</a></li><li><a href="#">Copyright</a></li><li><a href="#">Industrial Designs</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="#" onclick="showPage('home');scrollToId('services');return false;">Fees &amp; Services</a></li><li><a href="#" onclick="showPage('home');scrollToId('faq-sec');return false;">FAQs</a></li><li><a href="#" onclick="showPage('home');scrollToId('news-sec');return false;">News &amp; Events</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="#">18 Trafalgar Road, Kingston 10</a></li><li><a href="#">+1 876-946-1114</a></li><li><a href="#">info@jipo.gov.jm</a></li><li><a href="#" onclick="showPage('home');return false;">Home</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Jamaica Intellectual Property Office. All rights reserved.</span><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div></div>
+  </div>
+</footer>
+</div><!-- /page-about -->
+
+
+<!-- ================================================
+     LOGIN PAGE
+================================================ -->
+<div class="page" id="page-login">
+<div class="auth-page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-mark">JIPO</div>
+        <div class="logo-text">Jamaica IP Office <span>Client Portal</span></div>
+      </div>
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-sub">Log in to manage your applications, track status, and access your account wallet.</p>
+      <div class="form-group">
+        <label class="form-label" for="loginEmail">Email Address</label>
+        <input type="email" class="form-input" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
+        <div class="error-msg" id="loginEmailErr">Please enter a valid email address.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="loginPass">Password</label>
+        <div class="pass-wrapper">
+          <input type="password" class="form-input" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
+          <button class="toggle-pass" type="button" onclick="togglePass('loginPass',this)">Show</button>
+        </div>
+        <div class="error-msg" id="loginPassErr">Please enter your password.</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <label class="form-check"><input type="checkbox"> Remember me</label>
+        <a href="#" style="font-size:.82rem;color:var(--green);font-weight:600">Forgot password?</a>
+      </div>
+      <button class="btn-submit" onclick="handleLogin()">Log In to Portal</button>
+      <div class="auth-divider"><span>or continue with</span></div>
+      <button class="sso-btn">🇯🇲 &nbsp; Government SSO (GOJ)</button>
+      <div class="auth-switch">Don't have an account? <a onclick="showPage('register')">Create one free</a></div>
+    </div>
+  </div>
+</div>
+<div class="auth-footer">© 2026 Jamaica Intellectual Property Office &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#" onclick="showPage('home');return false;">Back to Home</a></div>
+</div><!-- /page-login -->
+
+
+<!-- ================================================
+     REGISTER PAGE
+================================================ -->
+<div class="page" id="page-register">
+<div class="auth-page">
+  <div class="auth-wrap">
+    <div class="auth-card auth-card-wide">
+      <div class="auth-logo">
+        <div class="logo-mark">JIPO</div>
+        <div class="logo-text">Jamaica IP Office <span>Create Account</span></div>
+      </div>
+      <h1 class="auth-title">Get Started</h1>
+      <p class="auth-sub">Create your free e-JIPO account to file and manage IP applications entirely online.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="regFirst">First Name</label>
+          <input type="text" class="form-input" id="regFirst" placeholder="Marcus" autocomplete="given-name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regLast">Last Name</label>
+          <input type="text" class="form-input" id="regLast" placeholder="Garvey" autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regEmail">Email Address</label>
+        <input type="email" class="form-input" id="regEmail" placeholder="you@example.com" autocomplete="email" />
+        <div class="error-msg" id="regEmailErr">Please enter a valid email address.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regType">Account Type</label>
+        <select class="form-input" id="regType">
+          <option value="">Select account type…</option>
+          <option>Individual / Creator</option>
+          <option>Small Business (MSME)</option>
+          <option>Corporation</option>
+          <option>IP Attorney / Agent</option>
+          <option>Academic / Research Institution</option>
+          <option>Foreign Rights Holder</option>
+        </select>
+        <div class="error-msg" id="regTypeErr">Please select an account type.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regPass">Password</label>
+        <div class="pass-wrapper">
+          <input type="password" class="form-input" id="regPass" placeholder="Create a strong password" autocomplete="new-password" />
+          <button class="toggle-pass" type="button" onclick="togglePass('regPass',this)">Show</button>
+        </div>
+        <div class="pass-strength-bar"><div class="pass-strength-fill" id="passStrengthFill"></div></div>
+        <div class="form-hint" id="passStrengthLabel">Enter a password</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regPassConfirm">Confirm Password</label>
+        <div class="pass-wrapper">
+          <input type="password" class="form-input" id="regPassConfirm" placeholder="Repeat your password" autocomplete="new-password" />
+        </div>
+        <div class="error-msg" id="regPassErr">Passwords do not match.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox" id="regTerms">
+          I agree to the <a href="#" style="color:var(--green)">Terms of Service</a> and <a href="#" style="color:var(--green)">Privacy Policy</a>
+        </label>
+        <div class="error-msg" id="regTermsErr">You must agree to the terms to continue.</div>
+      </div>
+      <button class="btn-submit" onclick="handleRegister()">Create My Account</button>
+      <div class="auth-switch">Already have an account? <a onclick="showPage('login')">Log in</a></div>
+    </div>
+  </div>
+</div>
+<div class="auth-footer">© 2026 Jamaica Intellectual Property Office &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#" onclick="showPage('home');return false;">Back to Home</a></div>
+</div><!-- /page-register -->
+
+
+<!-- ================================================
+     CLIENT PORTAL PAGE
+================================================ -->
+<div class="page" id="page-portal">
+<div class="portal-page">
+  <div class="portal-header">
+    <h2>My IP Portal</h2>
+    <div class="portal-tabs">
+      <button class="ptab active" onclick="portalTab(this,'dashboard')">Dashboard</button>
+      <button class="ptab" onclick="portalTab(this,'applications')">Applications</button>
+      <button class="ptab" onclick="portalTab(this,'renewals')">Renewals</button>
+      <button class="ptab" onclick="portalTab(this,'documents')">Documents</button>
+      <button class="ptab" onclick="portalTab(this,'wallet')">💳 Wallet</button>
+    </div>
+  </div>
+  <div class="portal-body">
+
+    <!-- DASHBOARD TAB -->
+    <div class="portal-tab-content active" id="ptab-dashboard">
+      <div>
+        <h3 class="portal-greeting" id="portalGreeting">Good morning!</h3>
+        <p class="portal-greeting-sub" id="portalGreetingSub">Here's an overview of your IP portfolio.</p>
+      </div>
+      <div class="portal-grid">
+        <div class="portal-stat">
+          <div class="ps-icon">🏷️</div>
+          <div><div class="ps-num">3</div><div class="ps-label">Trademarks</div></div>
+        </div>
+        <div class="portal-stat">
+          <div class="ps-icon">💡</div>
+          <div><div class="ps-num">1</div><div class="ps-label">Patent</div></div>
+        </div>
+        <div class="portal-stat">
+          <div class="ps-icon">⚠️</div>
+          <div><div class="ps-num">1</div><div class="ps-label">Renewal Due</div></div>
+        </div>
+        <div class="portal-stat">
+          <div class="ps-icon">💳</div>
+          <div><div class="ps-num" id="dashWalletBal">J$0</div><div class="ps-label">Wallet Balance</div></div>
+        </div>
+      </div>
+      <div class="renewal-alert">
+        <div class="ra-icon">🔔</div>
+        <p><strong>Renewal Reminder — Solar Sip™</strong>
+        Your trademark is due for renewal on 31 March 2026. Renewal fee: J$8,500.
+        <a href="#" class="renewal-link" onclick="portalTab(document.querySelectorAll('.ptab')[4],'wallet');return false;">Pay from Wallet →</a></p>
+      </div>
+      <div class="portal-table-wrap">
+        <h3>Recent Applications</h3>
+        <table>
+          <thead><tr><th>Reference</th><th>Name</th><th>Type</th><th>Filed</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>TM-2025-04821</td><td>Solar Sip™</td><td>Trademark</td><td>14 Jan 2025</td><td><span class="status-pill status-review">Under Review</span></td></tr>
+            <tr><td>TM-2024-03210</td><td>Yardie Tech™</td><td>Trademark</td><td>3 Aug 2024</td><td><span class="status-pill status-approved">Registered</span></td></tr>
+            <tr><td>PT-2024-00581</td><td>EcoFilter Device</td><td>Patent</td><td>20 Jun 2024</td><td><span class="status-pill status-pending">Pending</span></td></tr>
+            <tr><td>TM-2023-09914</td><td>Kingston Konfidence</td><td>Trademark</td><td>11 Nov 2023</td><td><span class="status-pill status-approved">Registered</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- APPLICATIONS TAB -->
+    <div class="portal-tab-content" id="ptab-applications">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <h3 style="font-family:var(--font-display);font-size:1.4rem">All Applications</h3>
+        <button class="btn-green" onclick="newApplication()">+ New Application</button>
+      </div>
+      <div class="portal-table-wrap">
+        <table>
+          <thead><tr><th>Reference</th><th>Name</th><th>Type</th><th>Filed</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>TM-2025-04821</td><td>Solar Sip™</td><td>Trademark</td><td>14 Jan 2025</td><td><span class="status-pill status-review">Under Review</span></td><td><a href="#" class="table-action">View</a></td></tr>
+            <tr><td>TM-2024-03210</td><td>Yardie Tech™</td><td>Trademark</td><td>3 Aug 2024</td><td><span class="status-pill status-approved">Registered</span></td><td><a href="#" class="table-action">Certificate</a></td></tr>
+            <tr><td>PT-2024-00581</td><td>EcoFilter Device</td><td>Patent</td><td>20 Jun 2024</td><td><span class="status-pill status-pending">Pending</span></td><td><a href="#" class="table-action">View</a></td></tr>
+            <tr><td>TM-2023-09914</td><td>Kingston Konfidence</td><td>Trademark</td><td>11 Nov 2023</td><td><span class="status-pill status-approved">Registered</span></td><td><a href="#" class="table-action">Certificate</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RENEWALS TAB -->
+    <div class="portal-tab-content" id="ptab-renewals">
+      <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:24px">Upcoming Renewals</h3>
+      <div class="renewal-alert">
+        <div class="ra-icon">⚠️</div>
+        <p><strong>Action Required — Solar Sip™ (TM-2025-04821)</strong>
+        Renewal deadline: 31 March 2026. Renewal fee: J$8,500.
+        <a href="#" class="renewal-link" onclick="payFromWallet('Solar Sip™ Trademark Renewal',8500);return false;">Pay from Wallet</a></p>
+      </div>
+      <div class="portal-table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Registration</th><th>Type</th><th>Expiry Date</th><th>Fee (JMD)</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Solar Sip™</td><td>Trademark</td><td>31 Mar 2026</td><td>J$8,500</td><td><a href="#" class="table-action" onclick="payFromWallet('Solar Sip™ Trademark Renewal',8500);return false;">Renew</a></td></tr>
+            <tr><td>Yardie Tech™</td><td>Trademark</td><td>15 Aug 2034</td><td>J$8,500</td><td><span style="color:var(--muted);font-size:.82rem">Not due yet</span></td></tr>
+            <tr><td>Kingston Konfidence</td><td>Trademark</td><td>11 Nov 2033</td><td>J$8,500</td><td><span style="color:var(--muted);font-size:.82rem">Not due yet</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS TAB -->
+    <div class="portal-tab-content" id="ptab-documents">
+      <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:24px">My Documents</h3>
+      <div class="portal-table-wrap">
+        <table>
+          <thead><tr><th>Document</th><th>Application</th><th>Date Issued</th><th>Download</th></tr></thead>
+          <tbody>
+            <tr><td>Registration Certificate</td><td>Yardie Tech™</td><td>5 Oct 2024</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+            <tr><td>Registration Certificate</td><td>Kingston Konfidence</td><td>22 Jan 2024</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+            <tr><td>Filing Receipt</td><td>Solar Sip™</td><td>14 Jan 2025</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+            <tr><td>Examination Report</td><td>EcoFilter Device</td><td>8 Sep 2024</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- WALLET TAB (NEW) -->
+    <div class="portal-tab-content" id="ptab-wallet">
+      <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:24px">Account Wallet</h3>
+
+      <!-- Balance card -->
+      <div class="wallet-card">
+        <div class="wallet-card-inner">
+          <div class="wallet-label">Available Balance</div>
+          <div class="wallet-balance" id="walletBalanceDisplay"><span>JMD</span><span id="walletBalanceNum">0</span></div>
+          <div class="wallet-sub">Use your wallet to pay for filing fees, renewals, and services instantly.</div>
+          <div class="wallet-actions">
+            <button class="btn-wallet btn-wallet-primary" onclick="openTopUpModal()">＋ Top Up Wallet</button>
+            <button class="btn-wallet btn-wallet-outline" onclick="showWalletHistory()">Transaction History</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent transactions -->
+      <div class="portal-table-wrap" style="margin-top:0;">
+        <div class="wallet-history-header">
+          <h3>Recent Transactions</h3>
+          <a onclick="showWalletHistory()">View all</a>
+        </div>
+        <div id="walletTransactions">
+          <p style="font-size:.875rem;color:var(--muted);text-align:center;padding:28px 0;">No transactions yet. Top up your wallet to get started.</p>
+        </div>
+      </div>
+
+      <!-- Payment methods info -->
+      <div style="background:var(--green-light);border-radius:var(--radius-md);padding:22px;margin-top:22px;border-left:4px solid var(--green);">
+        <h4 style="font-size:.9rem;font-weight:700;color:var(--green-dark);margin-bottom:8px;">Accepted Payment Methods</h4>
+        <p style="font-size:.85rem;color:var(--muted);">Visa / Mastercard · Bank Transfer (NCB, JN, BNS) · NCB QuickPay · Digicel Money. Funds are credited instantly after payment confirmation.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /page-portal -->
+
+
+<!-- ================================================
+     CHATBOT
+================================================ -->
+<div class="chatbot-container">
+  <button class="chatbot-button" onclick="toggleChat()">💬</button>
+  <div class="chatbot-box" id="chatbotBox">
+    <div class="chatbot-header">
+      <div>
+        <h4>JIPO Assistant</h4>
+        <div class="chat-status">Online — replies instantly</div>
+      </div>
+      <span class="close-btn" onclick="toggleChat()">✕</span>
+    </div>
+    <div class="chatbot-messages" id="chatMessages">
+      <div class="bot-message">Hello 👋 I'm the JIPO virtual assistant. Ask me about trademarks, patents, copyright, or how to file online!</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="userInput" placeholder="Ask a question…" />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOP-UP MODAL -->
+<div class="modal-overlay" id="topUpModal">
+  <div class="modal-box">
+    <div class="modal-title">Top Up Wallet</div>
+    <div class="modal-sub">Select an amount or enter a custom value to add to your account.</div>
+    <div class="amount-grid">
+      <button class="amount-btn" onclick="selectAmount(5000,this)">J$5,000</button>
+      <button class="amount-btn" onclick="selectAmount(10000,this)">J$10,000</button>
+      <button class="amount-btn" onclick="selectAmount(15000,this)">J$15,000</button>
+      <button class="amount-btn" onclick="selectAmount(20000,this)">J$20,000</button>
+      <button class="amount-btn" onclick="selectAmount(50000,this)">J$50,000</button>
+      <button class="amount-btn" onclick="selectAmount(100000,this)">J$100,000</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="customAmount">Or enter a custom amount (JMD)</label>
+      <input type="number" class="form-input" id="customAmount" placeholder="e.g. 25000" min="1000" />
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeTopUpModal()">Cancel</button>
+      <button class="modal-confirm" onclick="confirmTopUp()">Add Funds</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================
+     SCRIPTS
+================================================ -->
+
+<script src="script.js"></script>
+</body>
+</html>

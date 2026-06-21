@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JIPO – Jamaica Intellectual Property Office</title>
+<meta name="description" content="Jamaica's official intellectual property registry. Register trademarks, patents, and creative works entirely online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   JIPO DESIGN TOKENS & RESET
+============================================================ */
+:root {
+  --green-dark:  #004D2C;
+  --green:       #006838;
+  --green-mid:   #008048;
+  --green-light: #E8F5EE;
+  --gold:        #F4B22A;
+  --gold-dark:   #C88E0A;
+  --black:       #111111;
+  --ink:         #222222;
+  --muted:       #555555;
+  --rule:        #D9E8DF;
+  --surface:     #F6FAF7;
+  --white:       #FFFFFF;
+  --font-display:'Playfair Display', Georgia, serif;
+  --font-body:   'Inter', Arial, sans-serif;
+  --radius-sm: 6px; --radius-md: 12px; --radius-lg: 20px;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.07);
+  --shadow-md: 0 6px 24px rgba(0,0,0,.10);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,.14);
+  --transition: all .22s ease;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--surface);color:var(--ink);font-family:var(--font-body);line-height:1.65;}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;font-family:var(--font-body);}
+input,textarea,select{font-family:var(--font-body);}
+ul{list-style:none;}
+.hidden{display:none!important;}
+
+/* ============================================================
+   SHARED BUTTONS
+============================================================ */
+.btn-primary{background:var(--gold);color:var(--green-dark);padding:14px 28px;border-radius:var(--radius-sm);font-weight:700;font-size:.95rem;transition:var(--transition);border:none;display:inline-block;cursor:pointer;}
+.btn-primary:hover{background:var(--gold-dark);transform:translateY(-1px);box-shadow:var(--shadow-md);}
+.btn-outline{border:2px solid rgba(255,255,255,.45);color:white;padding:13px 26px;border-radius:var(--radius-sm);font-weight:600;font-size:.95rem;transition:var(--transition);display:inline-block;background:transparent;cursor:pointer;}
+.btn-outline:hover{border-color:white;background:rgba(255,255,255,.1);}
+.btn-green{background:var(--green);color:white;border:none;padding:12px 22px;border-radius:var(--radius-sm);font-weight:600;font-size:.9rem;transition:var(--transition);display:inline-block;cursor:pointer;}
+.btn-green:hover{background:var(--green-dark);}
+
+/* ============================================================
+   SECTION LAYOUT
+============================================================ */
+section{padding:80px 5%;}
+.section-inner{max-width:1280px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:54px;}
+.section-eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
+.section-header h2{font-family:var(--font-display);font-size:2.2rem;font-weight:900;color:var(--ink);}
+.section-header p{color:var(--muted);max-width:560px;margin:12px auto 0;font-size:.95rem;}
+
+/* ============================================================
+   HEADER / NAV
+============================================================ */
+header{background:var(--green-dark);position:sticky;top:0;z-index:900;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+.navbar{max-width:1280px;margin:0 auto;padding:0 5%;display:flex;align-items:center;justify-content:space-between;height:68px;}
+.logo-wrap{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.logo-mark{width:40px;height:40px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:900;color:var(--green-dark);font-size:1rem;flex-shrink:0;}
+.logo-text{color:white;font-weight:700;font-size:1rem;line-height:1.2;}
+.logo-text span{display:block;font-weight:300;font-size:.72rem;opacity:.75;letter-spacing:.04em;}
+nav ul{display:flex;gap:4px;align-items:center;}
+nav ul li a{color:rgba(255,255,255,.85);padding:8px 12px;border-radius:var(--radius-sm);font-size:.875rem;font-weight:500;transition:var(--transition);}
+nav ul li a:hover,.active-link{color:white;background:rgba(255,255,255,.12);}
+.nav-auth{display:flex;gap:8px;align-items:center;}
+.btn-nav-login{color:white;border:1.5px solid rgba(255,255,255,.4);padding:7px 16px;border-radius:var(--radius-sm);font-size:.875rem;font-weight:500;transition:var(--transition);background:transparent;cursor:pointer;}
+.btn-nav-login:hover{border-color:white;background:rgba(255,255,255,.1);}
+.btn-nav-register{background:var(--gold);color:var(--green-dark);padding:7px 18px;border-radius:var(--radius-sm);font-size:.875rem;font-weight:700;transition:var(--transition);border:none;cursor:pointer;}
+.btn-nav-register:hover{background:var(--gold-dark);}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:6px;}
+.hamburger span{width:24px;height:2px;background:white;border-radius:2px;}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.5);}
+.mobile-menu.open{display:flex;}
+.mobile-drawer{background:var(--green-dark);width:280px;height:100%;padding:24px 20px;display:flex;flex-direction:column;gap:6px;animation:slideIn .25s ease;overflow-y:auto;}
+@keyframes slideIn{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+.mobile-drawer a{color:rgba(255,255,255,.85);padding:12px 14px;border-radius:var(--radius-sm);font-size:.95rem;font-weight:500;display:block;transition:var(--transition);}
+.mobile-drawer a:hover{background:rgba(255,255,255,.1);color:white;}
+.drawer-close{background:none;border:none;color:white;font-size:1.2rem;margin-bottom:16px;align-self:flex-end;cursor:pointer;}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer{background:var(--black);color:rgba(255,255,255,.75);padding:60px 5% 32px;}
+.footer-inner{max-width:1280px;margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-brand p{font-size:.85rem;line-height:1.7;margin-bottom:20px;}
+.footer-social{display:flex;gap:10px;}
+.social-btn{width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:var(--transition);cursor:pointer;color:white;}
+.social-btn:hover{background:var(--green);}
+footer h4{color:white;font-size:.9rem;font-weight:700;margin-bottom:16px;letter-spacing:.04em;}
+footer ul{display:flex;flex-direction:column;gap:8px;}
+footer ul a{font-size:.85rem;transition:var(--transition);}
+footer ul a:hover{color:var(--gold);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.8rem;}
+.footer-bottom-links{display:flex;gap:18px;}
+.footer-bottom-links a{color:inherit;transition:var(--transition);}
+.footer-bottom-links a:hover{color:var(--gold);}
+
+/* ============================================================
+   CHATBOT
+============================================================ */
+.chatbot-container{position:fixed;bottom:24px;right:24px;z-index:800;}
+.chatbot-button{width:56px;height:56px;border-radius:50%;background:var(--green);color:white;border:none;font-size:22px;box-shadow:var(--shadow-lg);transition:var(--transition);}
+.chatbot-button:hover{background:var(--green-dark);transform:scale(1.05);}
+.chatbot-box{width:340px;height:460px;background:white;border-radius:var(--radius-lg);position:absolute;bottom:68px;right:0;display:none;flex-direction:column;box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--rule);}
+.chatbot-header{background:var(--green-dark);color:white;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;}
+.chatbot-header h4{font-size:.95rem;font-weight:600;}
+.chatbot-header .close-btn{cursor:pointer;opacity:.7;transition:var(--transition);font-size:1.1rem;}
+.chatbot-header .close-btn:hover{opacity:1;}
+.chat-status{display:flex;align-items:center;gap:6px;font-size:.75rem;opacity:.75;margin-top:2px;}
+.chat-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#4ADE80;}
+.chatbot-messages{flex:1;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.bot-message{background:var(--green-light);padding:10px 13px;border-radius:0 10px 10px 10px;font-size:.875rem;max-width:82%;align-self:flex-start;}
+.user-message{background:var(--green);color:white;padding:10px 13px;border-radius:10px 0 10px 10px;font-size:.875rem;max-width:82%;align-self:flex-end;}
+.typing-indicator{display:flex;gap:4px;align-items:center;padding:10px 13px;background:var(--green-light);border-radius:0 10px 10px 10px;max-width:60px;align-self:flex-start;}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:typingBounce 1.2s infinite;}
+.typing-dot:nth-child(2){animation-delay:.2s;}
+.typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes typingBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
+.chatbot-input{display:flex;border-top:1px solid var(--rule);}
+.chatbot-input input{flex:1;padding:12px 14px;border:none;outline:none;font-size:.875rem;}
+.chatbot-input button{background:var(--green);color:white;border:none;padding:0 16px;font-size:.85rem;font-weight:600;transition:var(--transition);}
+.chatbot-input button:hover{background:var(--green-dark);}
+
+/* ============================================================
+   FORMS
+============================================================ */
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:.8rem;font-weight:600;color:var(--ink);margin-bottom:6px;letter-spacing:.02em;}
+.form-input{width:100%;padding:12px 14px;border:1.5px solid var(--rule);border-radius:var(--radius-sm);font-size:.9rem;transition:var(--transition);background:white;color:var(--ink);}
+.form-input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,104,56,.1);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-hint{font-size:.75rem;color:var(--muted);margin-top:4px;}
+.form-check{display:flex;align-items:flex-start;gap:10px;font-size:.82rem;color:var(--muted);}
+.form-check input{margin-top:3px;accent-color:var(--green);width:15px;height:15px;}
+.input-error{border-color:#E53E3E!important;}
+.error-msg{font-size:.75rem;color:#E53E3E;margin-top:4px;display:none;}
+.btn-submit{width:100%;padding:14px;background:var(--green);color:white;border:none;border-radius:var(--radius-sm);font-size:.95rem;font-weight:700;transition:var(--transition);margin-top:8px;cursor:pointer;}
+.btn-submit:hover{background:var(--green-dark);}
+.pass-wrapper{position:relative;}
+.toggle-pass{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);font-size:.8rem;cursor:pointer;}
+.auth-divider{display:flex;align-items:center;gap:12px;margin:22px 0;}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--rule);}
+.auth-divider span{font-size:.78rem;color:var(--muted);white-space:nowrap;}
+.pass-strength-bar{height:4px;background:var(--rule);border-radius:2px;margin-top:8px;}
+.pass-strength-fill{height:100%;border-radius:2px;transition:all .3s;width:0%;}
+.status-pill{display:inline-block;padding:4px 10px;border-radius:20px;font-size:.75rem;font-weight:600;}
+.status-pending{background:#FEF3C7;color:#92400E;}
+.status-approved{background:#D1FAE5;color:#065F46;}
+.status-review{background:#DBEAFE;color:#1E40AF;}
+.status-received{background:#E0E7FF;color:#3730A3;}
+.table-action{color:var(--green);font-size:.82rem;font-weight:600;}
+.table-action:hover{text-decoration:underline;}
+
+/* PAGE ROUTER */
+.page{display:none;}
+.page.active{display:block;}
+
+@media(max-width:1024px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){nav,.nav-auth{display:none;}.hamburger{display:flex;}.footer-grid{grid-template-columns:1fr;gap:32px;}.form-row{grid-template-columns:1fr;}}
+
+/* ============================================================
+   HOME PAGE
+============================================================ */
+.hero{background:linear-gradient(rgba(0,0,0,.62),rgba(0,0,0,.62)),url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;color:white;padding:90px 5% 80px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,72,40,.45) 0%,transparent 60%);pointer-events:none;}
+.hero-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;position:relative;z-index:1;}
+.hero-eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;}
+.hero h1{font-family:var(--font-display);font-size:3.2rem;line-height:1.12;font-weight:900;margin-bottom:22px;}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.hero-sub{font-size:1.05rem;color:rgba(255,255,255,.78);max-width:540px;margin-bottom:38px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+.wizard-card{background:white;border-radius:var(--radius-lg);padding:32px;box-shadow:var(--shadow-lg);color:var(--ink);}
+.wizard-card h3{font-family:var(--font-display);color:var(--green);font-size:1.2rem;margin-bottom:6px;}
+.wizard-card p{font-size:.85rem;color:var(--muted);margin-bottom:22px;}
+.wizard-options{display:flex;flex-direction:column;gap:10px;}
+.wizard-opt{border:1.5px solid var(--rule);border-radius:var(--radius-md);padding:13px 16px;display:flex;align-items:center;gap:12px;transition:var(--transition);cursor:pointer;background:white;text-align:left;width:100%;}
+.wizard-opt:hover{border-color:var(--green);background:var(--green-light);}
+.wizard-opt .opt-icon{font-size:1.4rem;flex-shrink:0;}
+.wizard-opt .opt-text strong{display:block;font-size:.9rem;color:var(--ink);font-weight:600;}
+.wizard-opt .opt-text span{font-size:.78rem;color:var(--muted);}
+.stats-bar{background:var(--green);color:white;padding:24px 5%;}
+.stats-inner{max-width:1280px;margin:0 auto;display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px;}
+.stat-item{text-align:center;}
+.stat-num{font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--gold);}
+.stat-label{font-size:.8rem;opacity:.82;margin-top:2px;}
+.services{background:white;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;}
+.service-card{border:1.5px solid var(--rule);border-radius:var(--radius-lg);padding:32px 26px;transition:var(--transition);cursor:pointer;position:relative;overflow:hidden;}
+.service-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:transform .3s ease;}
+.service-card:hover{border-color:var(--green);box-shadow:var(--shadow-md);transform:translateY(-3px);}
+.service-card:hover::after{transform:scaleX(1);}
+.service-icon{font-size:2rem;margin-bottom:16px;}
+.service-card h3{font-size:1.05rem;font-weight:700;color:var(--green-dark);margin-bottom:8px;}
+.service-card p{font-size:.875rem;color:var(--muted);margin-bottom:18px;}
+.service-link{font-size:.85rem;font-weight:600;color:var(--green);display:flex;align-items:center;gap:6px;transition:var(--transition);}
+.service-card:hover .service-link{gap:10px;}
+.how-it-works{background:var(--surface);}
+.steps-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;}
+.step-item{padding:28px 24px;position:relative;}
+.step-item:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:36px;font-size:1.4rem;color:var(--rule);z-index:1;}
+.step-num{font-family:var(--font-display);font-size:2.8rem;font-weight:900;color:var(--green-light);margin-bottom:6px;line-height:1;}
+.step-item h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.step-item p{font-size:.85rem;color:var(--muted);}
+.wizard-section{background:var(--green-light);}
+.wizard-widget{background:white;border-radius:var(--radius-lg);padding:48px;box-shadow:var(--shadow-md);max-width:760px;margin:0 auto;}
+.wizard-step{display:none;}
+.wizard-step.active{display:block;}
+.wizard-question{font-family:var(--font-display);font-size:1.5rem;color:var(--ink);margin-bottom:8px;}
+.wizard-hint{font-size:.9rem;color:var(--muted);margin-bottom:28px;}
+.wizard-choices{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.wiz-choice{border:1.5px solid var(--rule);border-radius:var(--radius-md);padding:18px 20px;cursor:pointer;transition:var(--transition);background:white;text-align:left;}
+.wiz-choice:hover{border-color:var(--green);background:var(--green-light);}
+.wiz-choice .wc-icon{font-size:1.6rem;margin-bottom:8px;}
+.wiz-choice strong{display:block;font-size:.95rem;color:var(--ink);}
+.wiz-choice span{font-size:.8rem;color:var(--muted);margin-top:3px;display:block;}
+.wizard-result{background:var(--green-light);border-radius:var(--radius-md);padding:28px;border-left:4px solid var(--green);}
+.wizard-result h3{font-family:var(--font-display);font-size:1.3rem;color:var(--green-dark);margin-bottom:10px;}
+.wizard-result p{font-size:.9rem;color:var(--ink);margin-bottom:16px;}
+.wizard-progress{height:4px;background:var(--rule);border-radius:2px;margin-bottom:32px;}
+.wizard-progress-bar{height:100%;background:var(--green);border-radius:2px;transition:width .4s ease;}
+.wizard-restart{background:none;border:none;color:var(--green);font-weight:600;font-size:.85rem;margin-top:18px;cursor:pointer;}
+.tracker-section{background:white;}
+.tracker-widget{max-width:680px;margin:0 auto;background:var(--green-light);border-radius:var(--radius-lg);padding:40px;}
+.tracker-form{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
+.tracker-form input{flex:1;min-width:200px;padding:13px 16px;border:1.5px solid var(--rule);border-radius:var(--radius-sm);font-size:.95rem;transition:var(--transition);background:white;}
+.tracker-form input:focus{outline:none;border-color:var(--green);}
+.tracker-form button{background:var(--green);color:white;border:none;padding:13px 24px;border-radius:var(--radius-sm);font-weight:600;font-size:.9rem;transition:var(--transition);cursor:pointer;}
+.tracker-form button:hover{background:var(--green-dark);}
+.tracker-result{display:none;}
+.tracker-status{background:white;border-radius:var(--radius-md);padding:24px;border-left:4px solid var(--green);}
+.status-label{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.status-title{font-family:var(--font-display);font-size:1.2rem;margin-bottom:4px;}
+.status-timeline{display:flex;gap:0;margin-top:20px;}
+.tl-step{flex:1;text-align:center;position:relative;}
+.tl-step::before{content:'';position:absolute;top:12px;left:50%;right:-50%;height:2px;background:var(--rule);z-index:0;}
+.tl-step:last-child::before{display:none;}
+.tl-dot{width:24px;height:24px;border-radius:50%;background:var(--rule);border:3px solid white;margin:0 auto 8px;position:relative;z-index:1;transition:var(--transition);}
+.tl-dot.done{background:var(--green);}
+.tl-dot.active{background:var(--gold);box-shadow:0 0 0 4px rgba(244,178,42,.25);}
+.tl-label{font-size:.72rem;color:var(--muted);}
+
+/* QUICK LINKS */
+.quick-links-sec{background:var(--green-dark);}
+.quick-links-sec .section-eyebrow{color:var(--gold);}
+.quick-links-sec .section-header h2{color:white;}
+.quick-links-sec .section-header p{color:rgba(255,255,255,.65);}
+.ql-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+.ql-item{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-md);padding:22px 18px;text-align:center;color:white;transition:var(--transition);cursor:pointer;}
+.ql-item:hover{background:rgba(255,255,255,.18);transform:translateY(-2px);}
+.ql-icon{font-size:1.8rem;margin-bottom:10px;}
+.ql-item span{display:block;font-size:.85rem;font-weight:600;}
+
+/* NEWS */
+.news-sec{background:var(--surface);}
+.news-wrapper{overflow:hidden;width:100%;}
+.news-track{display:flex;gap:22px;width:max-content;animation:scrollNews 30s linear infinite;}
+.news-wrapper:hover .news-track{animation-play-state:paused;}
+.news-card{min-width:300px;background:white;padding:24px;border-radius:var(--radius-md);box-shadow:var(--shadow-sm);flex-shrink:0;border-top:3px solid var(--green);}
+.news-tag{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:8px;}
+.news-card h3{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.news-card p{font-size:.83rem;color:var(--muted);}
+@keyframes scrollNews{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.newsletter{background:var(--green);}
+.newsletter-inner{max-width:620px;margin:0 auto;text-align:center;}
+.newsletter h2{font-family:var(--font-display);font-size:2rem;color:white;margin-bottom:10px;}
+.newsletter p{color:rgba(255,255,255,.78);margin-bottom:28px;font-size:.95rem;}
+.nl-form{display:flex;gap:10px;}
+.nl-form input{flex:1;padding:13px 16px;border:none;border-radius:var(--radius-sm);font-size:.9rem;outline:none;}
+.nl-form button{background:var(--gold);color:var(--green-dark);border:none;padding:13px 22px;border-radius:var(--radius-sm);font-weight:700;font-size:.9rem;transition:var(--transition);white-space:nowrap;cursor:pointer;}
+.nl-form button:hover{background:var(--gold-dark);}
+.nl-success{display:none;color:var(--gold);font-weight:600;font-size:1rem;margin-top:14px;}
+
+@media(max-width:1024px){.hero-inner{grid-template-columns:1fr;gap:40px;}.wizard-card{max-width:500px;}.steps-wrap .step-item::after{display:none;}}
+@media(max-width:768px){.hero h1{font-size:2.1rem;}.wizard-choices{grid-template-columns:1fr;}.stats-inner{gap:32px;}.nl-form{flex-direction:column;}}
+
+/* ============================================================
+   ABOUT PAGE
+============================================================ */
+.about-hero{background:linear-gradient(135deg,var(--green-dark) 0%,#005230 100%);color:white;padding:90px 5% 80px;position:relative;overflow:hidden;}
+.about-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,72,40,.3) 0%,transparent 70%);pointer-events:none;}
+.about-hero-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1;max-width:760px;}
+.about-hero .hero-eyebrow{color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px;}
+.about-hero h1{font-family:var(--font-display);font-size:3rem;line-height:1.12;font-weight:900;margin-bottom:22px;}
+.about-hero h1 em{font-style:normal;color:var(--gold);}
+.about-hero p{font-size:1.1rem;color:rgba(255,255,255,.80);line-height:1.7;}
+.mv-strip{background:var(--green);}
+.mv-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;}
+.mv-block{padding:52px 48px;color:white;}
+.mv-block:first-child{border-right:1px solid rgba(255,255,255,.15);}
+.mv-block .mv-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.mv-block h2{font-family:var(--font-display);font-size:1.7rem;margin-bottom:14px;}
+.mv-block p{font-size:.95rem;color:rgba(255,255,255,.80);line-height:1.75;}
+.who-we-are{background:white;}
+.who-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.who-text h2{font-family:var(--font-display);font-size:2.1rem;color:var(--ink);margin-bottom:20px;}
+.who-text p{font-size:.95rem;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+.who-text p strong{color:var(--green-dark);}
+.who-badge-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;}
+.who-badge{background:var(--green-light);border-radius:var(--radius-md);padding:18px;border-left:3px solid var(--green);}
+.who-badge .wb-num{font-family:var(--font-display);font-size:1.6rem;font-weight:900;color:var(--green-dark);}
+.who-badge .wb-label{font-size:.8rem;color:var(--muted);margin-top:2px;}
+.who-visual{background:var(--green-light);border-radius:var(--radius-lg);padding:44px;display:flex;flex-direction:column;gap:20px;}
+.timeline-item{display:flex;gap:18px;align-items:flex-start;}
+.tl-year-dot{flex-shrink:0;width:48px;height:48px;border-radius:50%;background:var(--green);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:.78rem;font-weight:900;text-align:center;line-height:1.2;}
+.tl-content h4{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.tl-content p{font-size:.83rem;color:var(--muted);}
+.expertise-section{background:var(--surface);}
+.expertise-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;}
+.expertise-card{background:white;border-radius:var(--radius-lg);padding:36px 30px;border:1.5px solid var(--rule);transition:var(--transition);position:relative;overflow:hidden;}
+.expertise-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.expertise-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);}
+.expertise-card:hover::before{transform:scaleX(1);}
+.exp-icon{font-size:2.4rem;margin-bottom:18px;}
+.expertise-card h3{font-family:var(--font-display);font-size:1.15rem;color:var(--green-dark);margin-bottom:10px;}
+.expertise-card p{font-size:.875rem;color:var(--muted);line-height:1.75;margin-bottom:16px;}
+.exp-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.exp-tag{background:var(--green-light);color:var(--green-dark);font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:20px;letter-spacing:.03em;}
+.team-section{background:white;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;}
+.team-card{background:var(--surface);border-radius:var(--radius-lg);padding:32px 24px;text-align:center;transition:var(--transition);border:1.5px solid var(--rule);}
+.team-card:hover{box-shadow:var(--shadow-md);border-color:var(--green);}
+.team-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 18px;background:var(--green);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:1.6rem;font-weight:900;color:white;}
+.team-card h3{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.team-card .role{font-size:.82rem;color:var(--green);font-weight:600;margin-bottom:12px;}
+.team-card p{font-size:.82rem;color:var(--muted);line-height:1.7;}
+.legal-strip{background:var(--green-dark);padding:60px 5%;}
+.legal-inner{max-width:1280px;margin:0 auto;}
+.legal-strip .section-eyebrow{color:var(--gold);}
+.legal-strip .section-header h2{color:white;}
+.legal-strip .section-header p{color:rgba(255,255,255,.7);}
+.legal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:40px;}
+.legal-item{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-md);padding:22px 20px;color:white;}
+.legal-item h4{font-size:.92rem;font-weight:700;margin-bottom:6px;}
+.legal-item p{font-size:.8rem;color:rgba(255,255,255,.65);line-height:1.65;}
+.partnerships{background:var(--surface);}
+.partner-logos{max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:40px;}
+.partner-badge{background:white;border:1.5px solid var(--rule);border-radius:var(--radius-md);padding:16px 28px;font-size:.85rem;font-weight:700;color:var(--muted);transition:var(--transition);}
+.partner-badge:hover{border-color:var(--green);color:var(--green);}
+.about-cta{background:linear-gradient(135deg,var(--green-dark),#005830);color:white;text-align:center;padding:80px 5%;}
+.about-cta h2{font-family:var(--font-display);font-size:2.2rem;margin-bottom:14px;}
+.about-cta p{color:rgba(255,255,255,.78);max-width:520px;margin:0 auto 32px;}
+.about-cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+@media(max-width:1024px){.who-inner{grid-template-columns:1fr;gap:40px;}.mv-inner{grid-template-columns:1fr;}.mv-block:first-child{border-right:none;border-bottom:1px solid rgba(255,255,255,.15);}}
+@media(max-width:768px){.about-hero h1{font-size:2rem;}}
+
+/* ============================================================
+   AUTH PAGES
+============================================================ */
+.auth-page{min-height:100vh;background:var(--surface);display:flex;flex-direction:column;}
+.auth-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+.auth-card{background:white;border-radius:var(--radius-lg);padding:48px 44px;width:100%;max-width:440px;box-shadow:var(--shadow-lg);}
+.auth-card-wide{max-width:520px;}
+.auth-logo{display:flex;align-items:center;gap:10px;margin-bottom:32px;justify-content:center;}
+.auth-logo .logo-mark{width:44px;height:44px;font-size:1.1rem;}
+.auth-logo .logo-text{font-size:1.05rem;color:var(--ink);}
+.auth-logo .logo-text span{color:var(--muted);}
+.auth-title{font-family:var(--font-display);font-size:1.9rem;color:var(--ink);margin-bottom:6px;text-align:center;}
+.auth-sub{font-size:.875rem;color:var(--muted);text-align:center;margin-bottom:32px;}
+.auth-footer{background:var(--black);color:rgba(255,255,255,.5);padding:20px 5%;text-align:center;font-size:.8rem;}
+.auth-footer a{color:inherit;transition:var(--transition);}
+.auth-footer a:hover{color:var(--gold);}
+.sso-btn{width:100%;padding:12px;border:1.5px solid var(--rule);border-radius:var(--radius-sm);background:white;font-size:.9rem;font-weight:500;cursor:pointer;transition:var(--transition);}
+.sso-btn:hover{background:var(--surface);border-color:var(--green);}
+.auth-switch{text-align:center;margin-top:20px;font-size:.85rem;color:var(--muted);}
+.auth-switch a{color:var(--green);font-weight:600;cursor:pointer;}
+.auth-switch a:hover{text-decoration:underline;}
+@media(max-width:768px){.auth-card{padding:36px 24px;}}
+
+/* ============================================================
+   CLIENT PORTAL
+============================================================ */
+.portal-page{background:var(--surface);min-height:100vh;}
+.portal-header{background:white;border-bottom:1px solid var(--rule);padding:0 5%;min-height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:68px;z-index:700;flex-wrap:wrap;gap:10px;padding-top:8px;padding-bottom:8px;}
+.portal-header h2{font-size:1rem;font-weight:700;color:var(--ink);}
+.portal-tabs{display:flex;gap:4px;flex-wrap:wrap;}
+.ptab{padding:8px 16px;border-radius:var(--radius-sm);border:none;background:none;font-size:.85rem;font-weight:600;color:var(--muted);transition:var(--transition);cursor:pointer;}
+.ptab:hover{background:var(--green-light);color:var(--green);}
+.ptab.active{background:var(--green);color:white;}
+.portal-body{padding:40px 5%;max-width:1280px;margin:0 auto;}
+.portal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;}
+.portal-stat{background:white;border-radius:var(--radius-md);padding:24px;border:1px solid var(--rule);display:flex;align-items:center;gap:18px;}
+.ps-icon{width:48px;height:48px;border-radius:var(--radius-sm);background:var(--green-light);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;}
+.ps-num{font-family:var(--font-display);font-size:1.9rem;font-weight:900;color:var(--green-dark);line-height:1;}
+.ps-label{font-size:.8rem;color:var(--muted);margin-top:3px;}
+.portal-table-wrap{background:white;border-radius:var(--radius-md);padding:28px;border:1px solid var(--rule);margin-top:28px;}
+.portal-table-wrap h3{font-size:.95rem;font-weight:700;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;font-size:.875rem;}
+th{text-align:left;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:0 12px 12px;border-bottom:2px solid var(--rule);}
+td{padding:13px 12px;border-bottom:1px solid var(--rule);color:var(--ink);}
+tr:last-child td{border-bottom:none;}
+.renewal-alert{background:#FFF7ED;border:1px solid #FED7AA;border-radius:var(--radius-md);padding:18px 22px;margin-top:22px;display:flex;align-items:flex-start;gap:14px;}
+.renewal-alert .ra-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px;}
+.renewal-alert p{font-size:.875rem;color:#7C2D12;}
+.renewal-alert strong{display:block;margin-bottom:4px;}
+.renewal-link{color:var(--green-dark)!important;font-weight:700;}
+.portal-tab-content{display:none;}
+.portal-tab-content.active{display:block;}
+.portal-greeting{font-family:var(--font-display);font-size:1.6rem;color:var(--ink);}
+.portal-greeting-sub{color:var(--muted);font-size:.9rem;margin-top:4px;margin-bottom:28px;}
+@media(max-width:768px){.portal-tabs{overflow-x:auto;}.portal-header{height:auto;padding:12px 5%;}}
+
+/* ============================================================
+   WALLET / ACCOUNT BALANCE (NEW)
+============================================================ */
+.wallet-card{background:linear-gradient(135deg,var(--green-dark),var(--green-mid));border-radius:var(--radius-lg);padding:32px;color:white;position:relative;overflow:hidden;margin-bottom:28px;}
+.wallet-card::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05);}
+.wallet-card::after{content:'';position:absolute;right:40px;top:20px;width:120px;height:120px;border-radius:50%;background:rgba(244,178,42,.08);}
+.wallet-card-inner{position:relative;z-index:1;}
+.wallet-label{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:8px;}
+.wallet-balance{font-family:var(--font-display);font-size:2.8rem;font-weight:900;color:white;line-height:1;margin-bottom:4px;}
+.wallet-balance span{font-size:1.2rem;font-weight:400;opacity:.75;margin-right:4px;}
+.wallet-sub{font-size:.82rem;color:rgba(255,255,255,.6);margin-bottom:28px;}
+.wallet-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-wallet{padding:10px 20px;border-radius:var(--radius-sm);font-size:.875rem;font-weight:600;transition:var(--transition);cursor:pointer;border:none;}
+.btn-wallet-primary{background:var(--gold);color:var(--green-dark);}
+.btn-wallet-primary:hover{background:var(--gold-dark);}
+.btn-wallet-outline{background:rgba(255,255,255,.12);color:white;border:1.5px solid rgba(255,255,255,.3)!important;}
+.btn-wallet-outline:hover{background:rgba(255,255,255,.2);}
+.wallet-history-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.wallet-history-header h3{font-size:.95rem;font-weight:700;color:var(--ink);}
+.wallet-history-header a{font-size:.82rem;color:var(--green);font-weight:600;cursor:pointer;}
+.tx-item{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--rule);}
+.tx-item:last-child{border-bottom:none;}
+.tx-left{display:flex;align-items:center;gap:14px;}
+.tx-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.tx-icon.credit{background:#D1FAE5;}
+.tx-icon.debit{background:#FEE2E2;}
+.tx-desc{font-size:.875rem;font-weight:600;color:var(--ink);}
+.tx-date{font-size:.75rem;color:var(--muted);margin-top:2px;}
+.tx-amount{font-size:.95rem;font-weight:700;}
+.tx-amount.credit{color:#065F46;}
+.tx-amount.debit{color:#991B1B;}
+
+/* Top-up modal overlay */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:white;border-radius:var(--radius-lg);padding:40px;width:100%;max-width:420px;box-shadow:var(--shadow-lg);animation:modalIn .25s ease;}
+@keyframes modalIn{from{transform:scale(.95);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-title{font-family:var(--font-display);font-size:1.5rem;color:var(--ink);margin-bottom:6px;}
+.modal-sub{font-size:.875rem;color:var(--muted);margin-bottom:28px;}
+.amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;}
+.amount-btn{border:1.5px solid var(--rule);border-radius:var(--radius-sm);padding:12px;text-align:center;cursor:pointer;transition:var(--transition);background:white;font-size:.9rem;font-weight:600;color:var(--ink);}
+.amount-btn:hover,.amount-btn.selected{border-color:var(--green);background:var(--green-light);color:var(--green-dark);}
+.modal-actions{display:flex;gap:10px;margin-top:24px;}
+.modal-cancel{flex:1;padding:12px;border:1.5px solid var(--rule);border-radius:var(--radius-sm);background:white;font-weight:600;font-size:.9rem;cursor:pointer;transition:var(--transition);}
+.modal-cancel:hover{background:var(--surface);}
+.modal-confirm{flex:2;padding:12px;background:var(--green);color:white;border:none;border-radius:var(--radius-sm);font-weight:700;font-size:.9rem;cursor:pointer;transition:var(--transition);}
+.modal-confirm:hover{background:var(--green-dark);}
+/* ============================================================
+   SERVICE CARD FEES (fees folded into each service)
+============================================================ */
+.service-fees{list-style:none;margin:0 0 18px;padding:14px 0 4px;border-top:1px dashed var(--rule);display:flex;flex-direction:column;gap:8px;}
+.service-fees li{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--muted);}
+.service-fees li strong{color:var(--green-dark);font-weight:700;font-size:.85rem;}
+.services-fee-note{text-align:center;font-size:.82rem;color:var(--muted);margin-top:32px;max-width:640px;margin-left:auto;margin-right:auto;}
+
+/* ============================================================
+   LEADERSHIP PROFILES (About page)
+============================================================ */
+.leadership-sec{background:var(--surface);padding:80px 5%;}
+.leadership-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;max-width:1100px;margin:0 auto;}
+.leader-card{background:white;border:1.5px solid var(--rule);border-radius:var(--radius-lg);padding:34px 28px;text-align:center;transition:var(--transition);}
+.leader-card:hover{border-color:var(--green);box-shadow:var(--shadow-md);transform:translateY(-4px);}
+.leader-avatar{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--green-dark));color:white;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:900;font-size:1.6rem;margin:0 auto 20px;}
+.leader-card h3{font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.leader-role{font-size:.82rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.05em;margin-bottom:16px;}
+.leader-card p{font-size:.875rem;color:var(--muted);line-height:1.7;margin-bottom:18px;text-align:left;}
+.leader-expertise{list-style:none;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0;}
+.leader-expertise li{background:var(--green-light);color:var(--green-dark);font-size:.72rem;font-weight:600;padding:5px 12px;border-radius:999px;}
+
+/* ============================================================
+   SITE SEARCH
+============================================================ */
+.nav-search-btn{background:transparent;border:1.5px solid rgba(255,255,255,.4);color:white;width:38px;height:38px;border-radius:50%;font-size:.95rem;transition:var(--transition);display:flex;align-items:center;justify-content:center;margin-left:6px;flex-shrink:0;}
+.nav-search-btn:hover{background:rgba(255,255,255,.12);}
+.search-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;padding:80px 20px;}
+.search-overlay.open{display:block;animation:fadeIn .2s ease;}
+.search-panel{max-width:680px;margin:0 auto;background:white;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;}
+.search-bar{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--rule);}
+.search-bar-icon{font-size:1.1rem;}
+.search-bar input{flex:1;border:none;outline:none;font-size:1rem;color:var(--ink);background:transparent;}
+.search-close{background:var(--surface);border:none;width:34px;height:34px;border-radius:50%;color:var(--muted);font-size:.9rem;transition:var(--transition);}
+.search-close:hover{background:var(--green-light);color:var(--green-dark);}
+.search-results{max-height:50vh;overflow-y:auto;padding:12px;}
+.search-hint,.search-empty{text-align:center;color:var(--muted);font-size:.875rem;padding:32px 16px;}
+.search-result{display:block;width:100%;text-align:left;background:transparent;border:none;padding:14px 16px;border-radius:var(--radius-md);transition:var(--transition);cursor:pointer;}
+.search-result:hover{background:var(--green-light);}
+.search-result .sr-cat{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--green);}
+.search-result .sr-title{font-size:.95rem;font-weight:600;color:var(--ink);margin:2px 0;}
+.search-result .sr-desc{font-size:.82rem;color:var(--muted);line-height:1.5;}
+
+/* ============================================================
+   FEEDBACK & RATINGS
+============================================================ */
+.feedback-sec{background:white;padding:80px 5%;}
+.feedback-wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:36px;max-width:1000px;margin:0 auto;align-items:start;}
+.feedback-form{background:var(--surface);border:1.5px solid var(--rule);border-radius:var(--radius-lg);padding:32px;}
+.star-rating{display:flex;gap:6px;font-size:2rem;margin:4px 0 6px;}
+.star-rating .star{color:#D9D9D9;cursor:pointer;transition:transform .15s ease,color .15s ease;line-height:1;}
+.star-rating .star:hover{transform:scale(1.15);}
+.star-rating .star.active{color:var(--gold);}
+.rating-label{font-size:.82rem;color:var(--muted);font-weight:600;}
+.feedback-form textarea{resize:vertical;min-height:90px;}
+.feedback-submit{margin-top:6px;width:100%;}
+.feedback-success{display:none;margin-top:16px;background:var(--green-light);color:var(--green-dark);padding:14px 16px;border-radius:var(--radius-md);font-size:.875rem;font-weight:600;text-align:center;border-left:4px solid var(--green);}
+.feedback-side{display:flex;flex-direction:column;gap:24px;}
+.rating-summary{background:linear-gradient(135deg,var(--green-dark),#005830);color:white;border-radius:var(--radius-lg);padding:28px;text-align:center;}
+.rating-big{font-family:var(--font-display);font-size:3rem;font-weight:900;line-height:1;}
+.rating-stars-static{color:var(--gold);font-size:1.4rem;letter-spacing:3px;margin:8px 0 6px;}
+.rating-count{font-size:.8rem;color:rgba(255,255,255,.8);}
+.recent-reviews{display:flex;flex-direction:column;gap:14px;}
+.review-item{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius-md);padding:16px 18px;}
+.review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.review-head strong{font-size:.875rem;color:var(--ink);}
+.review-stars{color:var(--gold);font-size:.85rem;letter-spacing:1px;}
+.review-item p{font-size:.83rem;color:var(--muted);line-height:1.6;}
+@media(max-width:768px){.feedback-wrap{grid-template-columns:1fr;}.nav-search-btn{display:none;}}
+
+</style>
+</head>
+<body>
+
+<!-- ================================================
+     SHARED HEADER
+================================================ -->
+<header>
+  <nav class="navbar">
+    <div class="logo-wrap" onclick="showPage('home')">
+      <div class="logo-mark">JIPO</div>
+      <div class="logo-text">Jamaica IP Office <span>Protecting Innovation</span></div>
+    </div>
+    <ul id="mainNav">
+      <li><a href="#" onclick="showPage('home');return false;" class="active-link">Home</a></li>
+      <li><a href="#" onclick="showPage('home');scrollToId('services');return false;">Services</a></li>
+      <li><a href="#" onclick="showPage('home');scrollToId('wizard-sec');return false;">Should I Register?</a></li>
+      <li><a href="#" onclick="showPage('home');scrollToId('tracker-sec');return false;">Track Application</a></li>
+      <li><a href="#" onclick="showPage('about');return false;">About JIPO</a></li>
+    </ul>
+    <button class="nav-search-btn" onclick="openSearch()" aria-label="Search the site" title="Search">🔍</button>
+    <div class="nav-auth" id="navAuth">
+      <button class="btn-nav-login" onclick="showPage('login')">Log In</button>
+      <button class="btn-nav-register" onclick="showPage('register')">Register</button>
+    </div>
+    <div class="nav-auth hidden" id="navPortal">
+      <span style="color:rgba(255,255,255,.7);font-size:.85rem" id="navUsername"></span>
+      <button class="btn-nav-login" onclick="showPage('portal')">My Portal</button>
+      <button class="btn-nav-login" onclick="logout()">Sign Out</button>
+    </div>
+    <button class="hamburger" onclick="openMobileMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu" onclick="closeMobileMenu(event)">
+  <div class="mobile-drawer">
+    <button class="drawer-close" onclick="closeMobileMenu()">✕</button>
+    <a href="#" onclick="showPage('home');closeMobileMenu()">Home</a>
+    <a href="#" onclick="showPage('home');scrollToId('services');closeMobileMenu()">Services</a>
+    <a href="#" onclick="showPage('home');scrollToId('wizard-sec');closeMobileMenu()">Should I Register?</a>
+    <a href="#" onclick="showPage('home');scrollToId('tracker-sec');closeMobileMenu()">Track Application</a>
+    <a href="#" onclick="showPage('about');closeMobileMenu()">About JIPO</a>
+    <a href="#" onclick="closeMobileMenu();openSearch()">🔍 Search</a>
+    <hr style="border-color:rgba(255,255,255,.15);margin:8px 0">
+    <a href="#" onclick="showPage('login');closeMobileMenu()">Log In</a>
+    <a href="#" onclick="showPage('register');closeMobileMenu()" style="color:var(--gold);font-weight:700">Register Free</a>
+  </div>
+</div>
+
+<!-- ================================================
+     SITE SEARCH OVERLAY
+================================================ -->
+<div class="search-overlay" id="searchOverlay" onclick="closeSearch(event)">
+  <div class="search-panel">
+    <div class="search-bar">
+      <span class="search-bar-icon">🔍</span>
+      <input type="text" id="siteSearchInput" placeholder="Search services, fees, FAQs, news…" autocomplete="off" />
+      <button class="search-close" onclick="closeSearch()" aria-label="Close search">✕</button>
+    </div>
+    <div class="search-results" id="searchResults">
+      <p class="search-hint">Start typing to search across the JIPO website.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================
+     HOME PAGE
+================================================ -->
+<div class="page active" id="page-home">
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Official Government Portal — Jamaica</div>
+      <h1>Protect Your <em>Ideas.</em><br>Build Your Future.</h1>
+      <p class="hero-sub">Jamaica's official intellectual property registry. Register trademarks, patents, and creative works — entirely online, from anywhere.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="showPage('register')">Create a Free Account</button>
+        <button class="btn-outline" onclick="scrollToId('services')">Explore Services</button>
+      </div>
+    </div>
+    <div class="wizard-card">
+      <h3>Not sure where to start?</h3>
+      <p>Tell us what you're protecting and we'll point you in the right direction.</p>
+      <div class="wizard-options">
+        <button class="wizard-opt" onclick="showPage('home');scrollToId('wizard-sec')">
+          <span class="opt-icon">🏷️</span>
+          <div class="opt-text"><strong>Brand or Business Name</strong><span>Logos, names, slogans</span></div>
+        </button>
+        <button class="wizard-opt" onclick="showPage('home');scrollToId('wizard-sec')">
+          <span class="opt-icon">💡</span>
+          <div class="opt-text"><strong>Invention or Product</strong><span>New technologies, devices</span></div>
+        </button>
+        <button class="wizard-opt" onclick="showPage('home');scrollToId('wizard-sec')">
+          <span class="opt-icon">🎨</span>
+          <div class="opt-text"><strong>Creative Work</strong><span>Music, art, writing, software</span></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">14,200+</div><div class="stat-label">Trademarks Registered</div></div>
+    <div class="stat-item"><div class="stat-num">3,800+</div><div class="stat-label">Patents Filed</div></div>
+    <div class="stat-item"><div class="stat-num">7,500+</div><div class="stat-label">Copyrights Protected</div></div>
+    <div class="stat-item"><div class="stat-num">99%</div><div class="stat-label">Online Processing</div></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">What We Offer</div>
+      <h2>Our Core Services</h2>
+      <p>End-to-end IP protection for creators, entrepreneurs, and businesses in Jamaica and beyond.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏷️</div>
+        <h3>Trademark Registration</h3>
+        <p>Protect your brand name, logo, or slogan from unauthorised use. Build a legally recognised identity in Jamaica.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$5,000</strong></li>
+          <li><span>Registration Fee</span><strong>J$10,000</strong></li>
+          <li><span>Renewal Fee</span><strong>J$8,500</strong></li>
+        </ul>
+        <div class="service-link">Start filing <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <h3>Patent Protection</h3>
+        <p>Secure exclusive rights to your invention for up to 20 years. Prevent others from making, using, or selling your innovation.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$8,000</strong></li>
+          <li><span>Registration Fee</span><strong>J$15,000</strong></li>
+          <li><span>Renewal Fee</span><strong>J$12,000</strong></li>
+        </ul>
+        <div class="service-link">Learn more <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">©️</div>
+        <h3>Copyright Services</h3>
+        <p>Copyright arises automatically, but voluntary registration strengthens your legal position for music, art, and writing.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$2,500</strong></li>
+          <li><span>Registration Fee</span><strong>J$5,000</strong></li>
+          <li><span>Renewal Fee</span><strong>N/A</strong></li>
+        </ul>
+        <div class="service-link">Register a work <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Industrial Designs</h3>
+        <p>Protect the unique visual appearance of your product — its shape, colour, or pattern — and prevent counterfeit copies.</p>
+        <ul class="service-fees">
+          <li><span>Application Fee</span><strong>J$4,000</strong></li>
+          <li><span>Registration Fee</span><strong>J$8,000</strong></li>
+          <li><span>Renewal Fee</span><strong>J$6,500</strong></li>
+        </ul>
+        <div class="service-link">File a design <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔍</div>
+        <h3>IP Search Database</h3>
+        <p>Search existing trademarks, patents, and designs before you apply to avoid conflicts and save time and money.</p>
+        <ul class="service-fees">
+          <li><span>Basic Search</span><strong>Free</strong></li>
+          <li><span>Certified Search Report</span><strong>J$3,000</strong></li>
+        </ul>
+        <div class="service-link">Search now <span>→</span></div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3>IP Enforcement Guidance</h3>
+        <p>If your rights are being infringed, we explain your legal options and connect you with enforcement resources.</p>
+        <ul class="service-fees">
+          <li><span>Advisory Consultation</span><strong>Free</strong></li>
+          <li><span>Formal Opposition Filing</span><strong>J$7,500</strong></li>
+        </ul>
+        <div class="service-link">Get support <span>→</span></div>
+      </div>
+    </div>
+    <p class="services-fee-note">All fees are in Jamaican Dollars (JMD) and can be paid directly from your account wallet. Fees are subject to change.</p>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">The Process</div>
+      <h2>Filing in Four Steps</h2>
+      <p>Everything online. No branch visit required.</p>
+    </div>
+    <div class="steps-wrap">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <h3>Create Account</h3>
+        <p>Register free on e-JIPO. Your account stores all applications, certificates, and renewal dates in one place.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <h3>Search &amp; Check</h3>
+        <p>Use our database to confirm your mark or invention is unique before investing in the full registration fee.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <h3>Submit Online</h3>
+        <p>Complete your application and pay securely using your account wallet — no physical documents needed.</p>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <h3>Receive Certificate</h3>
+        <p>We examine and process your application then issue your certificate. Track every step in real time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WIZARD SECTION -->
+<section class="wizard-section" id="wizard-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Interactive Guide</div>
+      <h2>Should I Register My IP?</h2>
+      <p>Answer three quick questions and we'll tell you exactly what protection you need.</p>
+    </div>
+    <div class="wizard-widget">
+      <div class="wizard-progress"><div class="wizard-progress-bar" id="wizardProgress" style="width:0%"></div></div>
+      <div class="wizard-step active" id="wstep1">
+        <div class="wizard-question">What type of IP are you looking to protect?</div>
+        <div class="wizard-hint">Select the option that best describes your situation.</div>
+        <div class="wizard-choices">
+          <button class="wiz-choice" onclick="wizNext(2,'brand')"><div class="wc-icon">🏷️</div><strong>Brand / Identity</strong><span>Name, logo, slogan, packaging</span></button>
+          <button class="wiz-choice" onclick="wizNext(2,'invention')"><div class="wc-icon">⚙️</div><strong>Invention</strong><span>Device, process, formula</span></button>
+          <button class="wiz-choice" onclick="wizNext(2,'creative')"><div class="wc-icon">🎨</div><strong>Creative Work</strong><span>Music, art, writing, software</span></button>
+          <button class="wiz-choice" onclick="wizNext(2,'design')"><div class="wc-icon">📐</div><strong>Product Design</strong><span>Shape, colour, pattern</span></button>
+        </div>
+      </div>
+      <div class="wizard-step" id="wstep2">
+        <div class="wizard-question">Is your work already in public use?</div>
+        <div class="wizard-hint">This affects how urgently you should file.</div>
+        <div class="wizard-choices">
+          <button class="wiz-choice" onclick="wizNext(3,'yes')"><div class="wc-icon">✅</div><strong>Yes</strong><span>Already trading, performing, or publishing</span></button>
+          <button class="wiz-choice" onclick="wizNext(3,'no')"><div class="wc-icon">🔜</div><strong>Not yet</strong><span>Still in development or planning</span></button>
+        </div>
+      </div>
+      <div class="wizard-step" id="wstep3">
+        <div class="wizard-question">Do you need protection beyond Jamaica?</div>
+        <div class="wizard-hint">International filings involve different processes and timelines.</div>
+        <div class="wizard-choices">
+          <button class="wiz-choice" onclick="wizResult()"><div class="wc-icon">🌍</div><strong>Yes — internationally</strong><span>I plan to export or sell abroad</span></button>
+          <button class="wiz-choice" onclick="wizResult()"><div class="wc-icon">🇯🇲</div><strong>Jamaica only</strong><span>Domestic protection is sufficient</span></button>
+        </div>
+      </div>
+      <div class="wizard-step" id="wstep-result">
+        <div class="wizard-result">
+          <h3 id="wizardResultTitle">Our Recommendation</h3>
+          <p id="wizardResultText"></p>
+          <button class="btn-green" onclick="showPage('register')">Register Now to Apply</button>
+        </div>
+        <button class="wizard-restart" onclick="resetWizard()">← Start Over</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPLICATION TRACKER -->
+<section class="tracker-section" id="tracker-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">After You File</div>
+      <h2>Track Your Application</h2>
+      <p>Enter your application reference number to see real-time status and next steps.</p>
+    </div>
+    <div class="tracker-widget">
+      <div class="tracker-form">
+        <input type="text" id="trackInput" placeholder="e.g. TM-2025-04821" />
+        <button onclick="trackApplication()">Track</button>
+      </div>
+      <div class="tracker-result" id="trackerResult"></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK ACCESS — each item scrolls/navigates to its section -->
+<section class="quick-links-sec" id="quick-links">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Quick Access</div>
+      <h2>Everything You Need</h2>
+      <p>Common tasks, one click away.</p>
+    </div>
+    <div class="ql-grid">
+      <div class="ql-item" onclick="showPage('register')">
+        <div class="ql-icon">📂</div><span>Online Filing</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('services')">
+        <div class="ql-icon">🔍</div><span>Search Database</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('how-it-works')">
+        <div class="ql-icon">📄</div><span>Download Forms</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('services')">
+        <div class="ql-icon">💰</div><span>Fees &amp; Services</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('faq-sec')">
+        <div class="ql-icon">❓</div><span>FAQs</span>
+      </div>
+      <div class="ql-item" onclick="showPage('home');scrollToId('tracker-sec')">
+        <div class="ql-icon">📍</div><span>Track Application</span>
+      </div>
+      <div class="ql-item" onclick="currentUser?showPage('portal'):showPage('login')">
+        <div class="ql-icon">🔔</div><span>Renewal Reminders</span>
+      </div>
+      <div class="ql-item" onclick="toggleChat()">
+        <div class="ql-icon">📞</div><span>Contact Us</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQs -->
+<section style="background:var(--surface);padding:80px 5%;" id="faq-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Help</div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px;">
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          How long does trademark registration take? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">Trademark examination typically takes 3–6 months once the application is submitted. The total process from filing to registration can take 8–12 months if no objections are raised.</p>
+      </details>
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Do I need a lawyer to file a patent? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">You can file a patent yourself, but we recommend engaging a registered patent attorney for complex inventions. JIPO's e-filing system guides you through each step, and our staff are available to answer general process questions.</p>
+      </details>
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          How do I load funds to my account wallet? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">Log in to your Client Portal and click "Top Up Wallet" on the Wallet tab. You can add funds by credit/debit card, bank transfer, or NCB QuickPay. Funds are credited instantly and can be used to pay filing and registration fees.</p>
+      </details>
+      <details style="background:white;border-radius:var(--radius-md);padding:20px 24px;border:1px solid var(--rule);cursor:pointer;">
+        <summary style="font-weight:600;font-size:.95rem;color:var(--ink);list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Can I register IP internationally through JIPO? <span style="color:var(--green);">+</span>
+        </summary>
+        <p style="margin-top:14px;font-size:.875rem;color:var(--muted);line-height:1.75;">Yes. Jamaica is a member of the Paris Convention and the PCT Network, allowing Jamaican filers to seek protection in over 180 countries. JIPO can advise you on the Madrid System for international trademark registration and the Patent Cooperation Treaty for patents.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news-sec" id="news-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Updates</div>
+      <h2>Latest News &amp; Events</h2>
+    </div>
+  </div>
+  <div class="news-wrapper">
+    <div class="news-track" id="newsTrack"></div>
+  </div>
+</section>
+
+<!-- FEEDBACK & RATINGS -->
+<section class="feedback-sec" id="feedback-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Your Opinion Matters</div>
+      <h2>Share Your Feedback</h2>
+      <p>Help us improve our services. Rate your experience and tell us what you think.</p>
+    </div>
+    <div class="feedback-wrap">
+      <div class="feedback-form" id="feedbackForm">
+        <div class="form-group">
+          <label class="form-label">How would you rate your experience?</label>
+          <div class="star-rating" id="starRating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <div class="rating-label" id="ratingLabel">Tap a star to rate</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fbName">Name (optional)</label>
+          <input type="text" class="form-input" id="fbName" placeholder="Your name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="fbMessage">Your feedback</label>
+          <textarea class="form-input" id="fbMessage" rows="4" placeholder="Tell us about your experience or how we can improve…"></textarea>
+        </div>
+        <button class="btn-green feedback-submit" onclick="submitFeedback()">Submit Feedback</button>
+        <div class="feedback-success" id="feedbackSuccess">✅ Thank you! Your feedback has been received.</div>
+      </div>
+      <div class="feedback-side">
+        <div class="rating-summary">
+          <div class="rating-big" id="avgRating">4.8</div>
+          <div class="rating-stars-static" id="avgStars">★★★★★</div>
+          <div class="rating-count" id="ratingCount">Based on 1,240+ reviews</div>
+        </div>
+        <div class="recent-reviews" id="recentReviews">
+          <div class="review-item">
+            <div class="review-head"><strong>Andre M.</strong><span class="review-stars">★★★★★</span></div>
+            <p>Filed my trademark entirely online in under an hour. The wallet feature made paying so easy.</p>
+          </div>
+          <div class="review-item">
+            <div class="review-head"><strong>Keisha B.</strong><span class="review-stars">★★★★★</span></div>
+            <p>The IP wizard pointed me to exactly the right protection for my music. Excellent service.</p>
+          </div>
+          <div class="review-item">
+            <div class="review-head"><strong>Devon P.</strong><span class="review-stars">★★★★☆</span></div>
+            <p>Very helpful staff and a clear process. Tracking my patent application in real time was great.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <div class="section-inner">
+    <div class="newsletter-inner">
+      <h2>Stay Informed</h2>
+      <p>Get IP tips, renewal reminders, and JIPO updates delivered to your inbox. Unsubscribe any time.</p>
+      <div class="nl-form">
+        <input type="email" id="nlEmail" placeholder="Enter your email address" />
+        <button onclick="subscribeNewsletter()">Subscribe</button>
+      </div>
+      <div class="nl-success" id="nlSuccess">✅ You're subscribed! Check your inbox for a confirmation.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="color:white;font-weight:700;font-size:1rem;margin-bottom:12px;">Jamaica Intellectual Property Office</div>
+        <p>Protecting innovation, creativity, and investment in Jamaica since 1999. Part of the Ministry of Industry, Investment &amp; Commerce.</p>
+        <div class="footer-social">
+          <div class="social-btn">f</div><div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#" onclick="scrollToId('services');return false;">Trademark Registration</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Patent Filing</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Copyright</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Industrial Designs</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">IP Search Database</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('register');return false;">Online Filing (e-JIPO)</a></li>
+          <li><a href="#" onclick="scrollToId('how-it-works');return false;">Application Forms</a></li>
+          <li><a href="#" onclick="scrollToId('services');return false;">Fees &amp; Services</a></li>
+          <li><a href="#" onclick="scrollToId('faq-sec');return false;">FAQs</a></li>
+          <li><a href="#" onclick="scrollToId('news-sec');return false;">News &amp; Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">18 Trafalgar Road, Kingston 10</a></li>
+          <li><a href="#">+1 876-946-1114</a></li>
+          <li><a href="#">info@jipo.gov.jm</a></li>
+          <li><a href="#">Mon–Fri, 8am–5pm</a></li>
+          <li><a href="#" onclick="showPage('about');return false;">About JIPO</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Jamaica Intellectual Property Office. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div><!-- /page-home -->
+
+
+<!-- ================================================
+     ABOUT PAGE
+================================================ -->
+<div class="page" id="page-about">
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <div class="hero-eyebrow">Established 1999 · Kingston, Jamaica</div>
+    <h1>Built on <em>Expertise.</em><br>Driven by Purpose.</h1>
+    <p>The Jamaica Intellectual Property Office is the government authority responsible for administering and promoting intellectual property rights in Jamaica. We combine deep legal expertise, technical knowledge, and a commitment to public service to protect innovation across every sector of the Jamaican economy.</p>
+  </div>
+</section>
+<div class="mv-strip">
+  <div class="mv-inner">
+    <div class="mv-block">
+      <div class="mv-label">Our Mission</div>
+      <h2>Administer IP rights with integrity, efficiency, and expertise.</h2>
+      <p>To provide a world-class intellectual property system that supports economic growth, encourages innovation, and ensures Jamaican creators and businesses can protect and benefit from their ideas — at home and internationally.</p>
+    </div>
+    <div class="mv-block">
+      <div class="mv-label">Our Vision</div>
+      <h2>A Jamaica where every idea is valued and protected.</h2>
+      <p>We envision a nation where intellectual property is understood, respected, and actively used as a tool for economic development — where every artist, inventor, and entrepreneur knows their rights and can exercise them with confidence.</p>
+    </div>
+  </div>
+</div>
+<section class="who-we-are">
+  <div class="section-inner who-inner">
+    <div class="who-text">
+      <h2>Who We Are</h2>
+      <p>JIPO is a government statutory body established under the <strong>Jamaica Intellectual Property Office Act</strong>. We operate under the Ministry of Industry, Investment and Commerce and are Jamaica's official authority for the registration and administration of trademarks, patents, industrial designs, copyright, and geographical indications.</p>
+      <p>Our team includes qualified <strong>intellectual property attorneys</strong>, patent examiners, trademark examiners, copyright officers, and outreach specialists — all working together to ensure Jamaica's IP system is accessible, modern, and aligned with international standards.</p>
+      <div class="who-badge-grid">
+        <div class="who-badge"><div class="wb-num">25+</div><div class="wb-label">Years in operation</div></div>
+        <div class="who-badge"><div class="wb-num">40+</div><div class="wb-label">Expert staff members</div></div>
+        <div class="who-badge"><div class="wb-num">180+</div><div class="wb-label">Countries we connect with</div></div>
+        <div class="who-badge"><div class="wb-num">99%</div><div class="wb-label">Online processing rate</div></div>
+      </div>
+    </div>
+    <div class="who-visual">
+      <div class="timeline-item"><div class="tl-year-dot">1999</div><div class="tl-content"><h4>JIPO Established</h4><p>The Jamaica Intellectual Property Office Act creates a dedicated statutory body to administer IP rights in Jamaica.</p></div></div>
+      <div class="timeline-item"><div class="tl-year-dot">2004</div><div class="tl-content"><h4>TRIPS Alignment</h4><p>Full legislative alignment with the WTO's TRIPS Agreement, opening Jamaican filings to international reciprocity.</p></div></div>
+      <div class="timeline-item"><div class="tl-year-dot">2012</div><div class="tl-content"><h4>Digital Filing Launched</h4><p>First-generation online trademark and patent filing system launched, reducing processing time by 60%.</p></div></div>
+</section>
+<section class="leadership-sec" id="leadership-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Our Leadership</div>
+      <h2>Guided by Experts</h2>
+      <p>JIPO is led by a team of seasoned professionals with decades of combined experience in intellectual property law, examination, and public administration.</p>
+    </div>
+    <div class="leadership-grid">
+      <div class="leader-card">
+        <div class="leader-avatar">DC</div>
+        <h3>Dr. Carla Reid</h3>
+        <div class="leader-role">Director General</div>
+        <p>An attorney-at-law with over 20 years in intellectual property and commercial law, Dr. Reid oversees JIPO's strategic direction and international engagement. She holds a doctorate in IP law and has represented Jamaica at WIPO assemblies.</p>
+        <ul class="leader-expertise">
+          <li>IP Policy &amp; Strategy</li>
+          <li>International Treaties</li>
+          <li>Commercial Law</li>
+        </ul>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">MB</div>
+        <h3>Marcus Bennett</h3>
+        <div class="leader-role">Deputy Director, Patents &amp; Designs</div>
+        <p>A registered patent examiner and former engineer, Marcus leads the technical examination of patents and industrial designs. His background in mechanical engineering brings rigour to prior-art assessment and innovation support for inventors.</p>
+        <ul class="leader-expertise">
+          <li>Patent Examination</li>
+          <li>Industrial Designs</li>
+          <li>Technical Assessment</li>
+        </ul>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">ST</div>
+        <h3>Simone Thompson</h3>
+        <div class="leader-role">Head of Trademarks &amp; Copyright</div>
+        <p>Simone manages the trademark and copyright divisions, ensuring fast, fair examination for Jamaican creators and businesses. She specialises in brand protection and has led JIPO's outreach programmes for MSMEs and the creative sector.</p>
+        <ul class="leader-expertise">
+          <li>Trademark Law</li>
+          <li>Copyright &amp; Creative Sector</li>
+          <li>Public Outreach</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="partnerships">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">International Affiliations</div>
+      <h2>Who We Work With</h2>
+      <p>JIPO is connected to the global IP ecosystem through membership and partnerships with leading international bodies.</p>
+    </div>
+    <div class="partner-logos">
+      <div class="partner-badge">🌐 WIPO</div>
+      <div class="partner-badge">⚖️ WTO / TRIPS</div>
+      <div class="partner-badge">🇯🇲 GOJ — MIIC</div>
+      <div class="partner-badge">🌍 Paris Convention</div>
+      <div class="partner-badge">📚 Berne Convention</div>
+      <div class="partner-badge">🏝️ CARICOM</div>
+      <div class="partner-badge">🔬 PCT Network</div>
+      <div class="partner-badge">🎵 JACAP</div>
+    </div>
+  </div>
+</section>
+<section class="about-cta">
+  <h2>Ready to Protect Your IP?</h2>
+  <p>Join thousands of Jamaican creators, entrepreneurs, and businesses who trust JIPO to secure their most valuable assets.</p>
+  <div class="about-cta-actions">
+    <button class="btn-primary" onclick="showPage('register')">Create a Free Account</button>
+    <button class="btn-outline" onclick="showPage('home');scrollToId('wizard-sec')">Take the IP Wizard</button>
+  </div>
+</section>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="color:white;font-weight:700;font-size:1rem;margin-bottom:12px;">Jamaica Intellectual Property Office</div>
+        <p>Protecting innovation, creativity, and investment in Jamaica since 1999.</p>
+        <div class="footer-social">
+          <div class="social-btn">f</div><div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">▶</div>
+        </div>
+      </div>
+      <div><h4>Services</h4><ul><li><a href="#">Trademark Registration</a></li><li><a href="#">Patent Filing</a></li><li><a href="#">Copyright</a></li><li><a href="#">Industrial Designs</a></li></ul></div>
+      <div><h4>Resources</h4><ul><li><a href="#" onclick="showPage('home');scrollToId('services');return false;">Fees &amp; Services</a></li><li><a href="#" onclick="showPage('home');scrollToId('faq-sec');return false;">FAQs</a></li><li><a href="#" onclick="showPage('home');scrollToId('news-sec');return false;">News &amp; Events</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="#">18 Trafalgar Road, Kingston 10</a></li><li><a href="#">+1 876-946-1114</a></li><li><a href="#">info@jipo.gov.jm</a></li><li><a href="#" onclick="showPage('home');return false;">Home</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Jamaica Intellectual Property Office. All rights reserved.</span><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms of Use</a></div></div>
+  </div>
+</footer>
+</div><!-- /page-about -->
+
+
+<!-- ================================================
+     LOGIN PAGE
+================================================ -->
+<div class="page" id="page-login">
+<div class="auth-page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-mark">JIPO</div>
+        <div class="logo-text">Jamaica IP Office <span>Client Portal</span></div>
+      </div>
+      <h1 class="auth-title">Welcome Back</h1>
+      <p class="auth-sub">Log in to manage your applications, track status, and access your account wallet.</p>
+      <div class="form-group">
+        <label class="form-label" for="loginEmail">Email Address</label>
+        <input type="email" class="form-input" id="loginEmail" placeholder="you@example.com" autocomplete="email" />
+        <div class="error-msg" id="loginEmailErr">Please enter a valid email address.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="loginPass">Password</label>
+        <div class="pass-wrapper">
+          <input type="password" class="form-input" id="loginPass" placeholder="••••••••" autocomplete="current-password" />
+          <button class="toggle-pass" type="button" onclick="togglePass('loginPass',this)">Show</button>
+        </div>
+        <div class="error-msg" id="loginPassErr">Please enter your password.</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+        <label class="form-check"><input type="checkbox"> Remember me</label>
+        <a href="#" style="font-size:.82rem;color:var(--green);font-weight:600">Forgot password?</a>
+      </div>
+      <button class="btn-submit" onclick="handleLogin()">Log In to Portal</button>
+      <div class="auth-divider"><span>or continue with</span></div>
+      <button class="sso-btn">🇯🇲 &nbsp; Government SSO (GOJ)</button>
+      <div class="auth-switch">Don't have an account? <a onclick="showPage('register')">Create one free</a></div>
+    </div>
+  </div>
+</div>
+<div class="auth-footer">© 2026 Jamaica Intellectual Property Office &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#" onclick="showPage('home');return false;">Back to Home</a></div>
+</div><!-- /page-login -->
+
+
+<!-- ================================================
+     REGISTER PAGE
+================================================ -->
+<div class="page" id="page-register">
+<div class="auth-page">
+  <div class="auth-wrap">
+    <div class="auth-card auth-card-wide">
+      <div class="auth-logo">
+        <div class="logo-mark">JIPO</div>
+        <div class="logo-text">Jamaica IP Office <span>Create Account</span></div>
+      </div>
+      <h1 class="auth-title">Get Started</h1>
+      <p class="auth-sub">Create your free e-JIPO account to file and manage IP applications entirely online.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="regFirst">First Name</label>
+          <input type="text" class="form-input" id="regFirst" placeholder="Marcus" autocomplete="given-name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="regLast">Last Name</label>
+          <input type="text" class="form-input" id="regLast" placeholder="Garvey" autocomplete="family-name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regEmail">Email Address</label>
+        <input type="email" class="form-input" id="regEmail" placeholder="you@example.com" autocomplete="email" />
+        <div class="error-msg" id="regEmailErr">Please enter a valid email address.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regType">Account Type</label>
+        <select class="form-input" id="regType">
+          <option value="">Select account type…</option>
+          <option>Individual / Creator</option>
+          <option>Small Business (MSME)</option>
+          <option>Corporation</option>
+          <option>IP Attorney / Agent</option>
+          <option>Academic / Research Institution</option>
+          <option>Foreign Rights Holder</option>
+        </select>
+        <div class="error-msg" id="regTypeErr">Please select an account type.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regPass">Password</label>
+        <div class="pass-wrapper">
+          <input type="password" class="form-input" id="regPass" placeholder="Create a strong password" autocomplete="new-password" />
+          <button class="toggle-pass" type="button" onclick="togglePass('regPass',this)">Show</button>
+        </div>
+        <div class="pass-strength-bar"><div class="pass-strength-fill" id="passStrengthFill"></div></div>
+        <div class="form-hint" id="passStrengthLabel">Enter a password</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="regPassConfirm">Confirm Password</label>
+        <div class="pass-wrapper">
+          <input type="password" class="form-input" id="regPassConfirm" placeholder="Repeat your password" autocomplete="new-password" />
+        </div>
+        <div class="error-msg" id="regPassErr">Passwords do not match.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox" id="regTerms">
+          I agree to the <a href="#" style="color:var(--green)">Terms of Service</a> and <a href="#" style="color:var(--green)">Privacy Policy</a>
+        </label>
+        <div class="error-msg" id="regTermsErr">You must agree to the terms to continue.</div>
+      </div>
+      <button class="btn-submit" onclick="handleRegister()">Create My Account</button>
+      <div class="auth-switch">Already have an account? <a onclick="showPage('login')">Log in</a></div>
+    </div>
+  </div>
+</div>
+<div class="auth-footer">© 2026 Jamaica Intellectual Property Office &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#" onclick="showPage('home');return false;">Back to Home</a></div>
+</div><!-- /page-register -->
+
+
+<!-- ================================================
+     CLIENT PORTAL PAGE
+================================================ -->
+<div class="page" id="page-portal">
+<div class="portal-page">
+  <div class="portal-header">
+    <h2>My IP Portal</h2>
+    <div class="portal-tabs">
+      <button class="ptab active" onclick="portalTab(this,'dashboard')">Dashboard</button>
+      <button class="ptab" onclick="portalTab(this,'applications')">Applications</button>
+      <button class="ptab" onclick="portalTab(this,'renewals')">Renewals</button>
+      <button class="ptab" onclick="portalTab(this,'documents')">Documents</button>
+      <button class="ptab" onclick="portalTab(this,'wallet')">💳 Wallet</button>
+    </div>
+  </div>
+  <div class="portal-body">
+
+    <!-- DASHBOARD TAB -->
+    <div class="portal-tab-content active" id="ptab-dashboard">
+      <div>
+        <h3 class="portal-greeting" id="portalGreeting">Good morning!</h3>
+        <p class="portal-greeting-sub" id="portalGreetingSub">Here's an overview of your IP portfolio.</p>
+      </div>
+      <div class="portal-grid">
+        <div class="portal-stat">
+          <div class="ps-icon">🏷️</div>
+          <div><div class="ps-num">3</div><div class="ps-label">Trademarks</div></div>
+        </div>
+        <div class="portal-stat">
+          <div class="ps-icon">💡</div>
+          <div><div class="ps-num">1</div><div class="ps-label">Patent</div></div>
+        </div>
+        <div class="portal-stat">
+          <div class="ps-icon">⚠️</div>
+          <div><div class="ps-num">1</div><div class="ps-label">Renewal Due</div></div>
+        </div>
+        <div class="portal-stat">
+          <div class="ps-icon">💳</div>
+          <div><div class="ps-num" id="dashWalletBal">J$0</div><div class="ps-label">Wallet Balance</div></div>
+        </div>
+      </div>
+      <div class="renewal-alert">
+        <div class="ra-icon">🔔</div>
+        <p><strong>Renewal Reminder — Solar Sip™</strong>
+        Your trademark is due for renewal on 31 March 2026. Renewal fee: J$8,500.
+        <a href="#" class="renewal-link" onclick="portalTab(document.querySelectorAll('.ptab')[4],'wallet');return false;">Pay from Wallet →</a></p>
+      </div>
+      <div class="portal-table-wrap">
+        <h3>Recent Applications</h3>
+        <table>
+          <thead><tr><th>Reference</th><th>Name</th><th>Type</th><th>Filed</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>TM-2025-04821</td><td>Solar Sip™</td><td>Trademark</td><td>14 Jan 2025</td><td><span class="status-pill status-review">Under Review</span></td></tr>
+            <tr><td>TM-2024-03210</td><td>Yardie Tech™</td><td>Trademark</td><td>3 Aug 2024</td><td><span class="status-pill status-approved">Registered</span></td></tr>
+            <tr><td>PT-2024-00581</td><td>EcoFilter Device</td><td>Patent</td><td>20 Jun 2024</td><td><span class="status-pill status-pending">Pending</span></td></tr>
+            <tr><td>TM-2023-09914</td><td>Kingston Konfidence</td><td>Trademark</td><td>11 Nov 2023</td><td><span class="status-pill status-approved">Registered</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- APPLICATIONS TAB -->
+    <div class="portal-tab-content" id="ptab-applications">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px">
+        <h3 style="font-family:var(--font-display);font-size:1.4rem">All Applications</h3>
+        <button class="btn-green" onclick="newApplication()">+ New Application</button>
+      </div>
+      <div class="portal-table-wrap">
+        <table>
+          <thead><tr><th>Reference</th><th>Name</th><th>Type</th><th>Filed</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>TM-2025-04821</td><td>Solar Sip™</td><td>Trademark</td><td>14 Jan 2025</td><td><span class="status-pill status-review">Under Review</span></td><td><a href="#" class="table-action">View</a></td></tr>
+            <tr><td>TM-2024-03210</td><td>Yardie Tech™</td><td>Trademark</td><td>3 Aug 2024</td><td><span class="status-pill status-approved">Registered</span></td><td><a href="#" class="table-action">Certificate</a></td></tr>
+            <tr><td>PT-2024-00581</td><td>EcoFilter Device</td><td>Patent</td><td>20 Jun 2024</td><td><span class="status-pill status-pending">Pending</span></td><td><a href="#" class="table-action">View</a></td></tr>
+            <tr><td>TM-2023-09914</td><td>Kingston Konfidence</td><td>Trademark</td><td>11 Nov 2023</td><td><span class="status-pill status-approved">Registered</span></td><td><a href="#" class="table-action">Certificate</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RENEWALS TAB -->
+    <div class="portal-tab-content" id="ptab-renewals">
+      <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:24px">Upcoming Renewals</h3>
+      <div class="renewal-alert">
+        <div class="ra-icon">⚠️</div>
+        <p><strong>Action Required — Solar Sip™ (TM-2025-04821)</strong>
+        Renewal deadline: 31 March 2026. Renewal fee: J$8,500.
+        <a href="#" class="renewal-link" onclick="payFromWallet('Solar Sip™ Trademark Renewal',8500);return false;">Pay from Wallet</a></p>
+      </div>
+      <div class="portal-table-wrap" style="margin-top:22px">
+        <table>
+          <thead><tr><th>Registration</th><th>Type</th><th>Expiry Date</th><th>Fee (JMD)</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Solar Sip™</td><td>Trademark</td><td>31 Mar 2026</td><td>J$8,500</td><td><a href="#" class="table-action" onclick="payFromWallet('Solar Sip™ Trademark Renewal',8500);return false;">Renew</a></td></tr>
+            <tr><td>Yardie Tech™</td><td>Trademark</td><td>15 Aug 2034</td><td>J$8,500</td><td><span style="color:var(--muted);font-size:.82rem">Not due yet</span></td></tr>
+            <tr><td>Kingston Konfidence</td><td>Trademark</td><td>11 Nov 2033</td><td>J$8,500</td><td><span style="color:var(--muted);font-size:.82rem">Not due yet</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS TAB -->
+    <div class="portal-tab-content" id="ptab-documents">
+      <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:24px">My Documents</h3>
+      <div class="portal-table-wrap">
+        <table>
+          <thead><tr><th>Document</th><th>Application</th><th>Date Issued</th><th>Download</th></tr></thead>
+          <tbody>
+            <tr><td>Registration Certificate</td><td>Yardie Tech™</td><td>5 Oct 2024</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+            <tr><td>Registration Certificate</td><td>Kingston Konfidence</td><td>22 Jan 2024</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+            <tr><td>Filing Receipt</td><td>Solar Sip™</td><td>14 Jan 2025</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+            <tr><td>Examination Report</td><td>EcoFilter Device</td><td>8 Sep 2024</td><td><a href="#" class="table-action">📄 Download PDF</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- WALLET TAB (NEW) -->
+    <div class="portal-tab-content" id="ptab-wallet">
+      <h3 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:24px">Account Wallet</h3>
+
+      <!-- Balance card -->
+      <div class="wallet-card">
+        <div class="wallet-card-inner">
+          <div class="wallet-label">Available Balance</div>
+          <div class="wallet-balance" id="walletBalanceDisplay"><span>JMD</span><span id="walletBalanceNum">0</span></div>
+          <div class="wallet-sub">Use your wallet to pay for filing fees, renewals, and services instantly.</div>
+          <div class="wallet-actions">
+            <button class="btn-wallet btn-wallet-primary" onclick="openTopUpModal()">＋ Top Up Wallet</button>
+            <button class="btn-wallet btn-wallet-outline" onclick="showWalletHistory()">Transaction History</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent transactions -->
+      <div class="portal-table-wrap" style="margin-top:0;">
+        <div class="wallet-history-header">
+          <h3>Recent Transactions</h3>
+          <a onclick="showWalletHistory()">View all</a>
+        </div>
+        <div id="walletTransactions">
+          <p style="font-size:.875rem;color:var(--muted);text-align:center;padding:28px 0;">No transactions yet. Top up your wallet to get started.</p>
+        </div>
+      </div>
+
+      <!-- Payment methods info -->
+      <div style="background:var(--green-light);border-radius:var(--radius-md);padding:22px;margin-top:22px;border-left:4px solid var(--green);">
+        <h4 style="font-size:.9rem;font-weight:700;color:var(--green-dark);margin-bottom:8px;">Accepted Payment Methods</h4>
+        <p style="font-size:.85rem;color:var(--muted);">Visa / Mastercard · Bank Transfer (NCB, JN, BNS) · NCB QuickPay · Digicel Money. Funds are credited instantly after payment confirmation.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div><!-- /page-portal -->
+
+
+<!-- ================================================
+     CHATBOT
+================================================ -->
+<div class="chatbot-container">
+  <button class="chatbot-button" onclick="toggleChat()">💬</button>
+  <div class="chatbot-box" id="chatbotBox">
+    <div class="chatbot-header">
+      <div>
+        <h4>JIPO Assistant</h4>
+        <div class="chat-status">Online — replies instantly</div>
+      </div>
+      <span class="close-btn" onclick="toggleChat()">✕</span>
+    </div>
+    <div class="chatbot-messages" id="chatMessages">
+      <div class="bot-message">Hello 👋 I'm the JIPO virtual assistant. Ask me about trademarks, patents, copyright, or how to file online!</div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="userInput" placeholder="Ask a question…" />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOP-UP MODAL -->
+<div class="modal-overlay" id="topUpModal">
+  <div class="modal-box">
+    <div class="modal-title">Top Up Wallet</div>
+    <div class="modal-sub">Select an amount or enter a custom value to add to your account.</div>
+    <div class="amount-grid">
+      <button class="amount-btn" onclick="selectAmount(5000,this)">J$5,000</button>
+      <button class="amount-btn" onclick="selectAmount(10000,this)">J$10,000</button>
+      <button class="amount-btn" onclick="selectAmount(15000,this)">J$15,000</button>
+      <button class="amount-btn" onclick="selectAmount(20000,this)">J$20,000</button>
+      <button class="amount-btn" onclick="selectAmount(50000,this)">J$50,000</button>
+      <button class="amount-btn" onclick="selectAmount(100000,this)">J$100,000</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="customAmount">Or enter a custom amount (JMD)</label>
+      <input type="number" class="form-input" id="customAmount" placeholder="e.g. 25000" min="1000" />
+    </div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeTopUpModal()">Cancel</button>
+      <button class="modal-confirm" onclick="confirmTopUp()">Add Funds</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ================================================
+     SCRIPTS
+================================================ -->
+
+<script>
+"use strict";
+
+/* -------- WALLET STATE -------- */
+let walletBalance = 0;
+let walletTransactions = [];
+let selectedTopUpAmount = 0;
+
+function formatJMD(amount) {
+  return 'J$' + amount.toLocaleString('en-JM');
+}
+
+function updateWalletUI() {
+  const balNum = document.getElementById('walletBalanceNum');
+  const dashBal = document.getElementById('dashWalletBal');
+  if (balNum) balNum.textContent = walletBalance.toLocaleString('en-JM');
+  if (dashBal) dashBal.textContent = formatJMD(walletBalance);
+}
+
+function openTopUpModal() {
+  selectedTopUpAmount = 0;
+  document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+  const custom = document.getElementById('customAmount');
+  if (custom) custom.value = '';
+  document.getElementById('topUpModal').classList.add('open');
+}
+
+function closeTopUpModal() {
+  document.getElementById('topUpModal').classList.remove('open');
+}
+
+function selectAmount(amount, btn) {
+  selectedTopUpAmount = amount;
+  document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  const custom = document.getElementById('customAmount');
+  if (custom) custom.value = '';
+}
+
+function confirmTopUp() {
+  const customInput = document.getElementById('customAmount');
+  let amount = selectedTopUpAmount;
+  if (customInput && customInput.value) {
+    amount = parseInt(customInput.value) || 0;
+  }
+  if (!amount || amount < 1000) {
+    alert('Please select or enter a valid amount (minimum J$1,000).');
+    return;
+  }
+  walletBalance += amount;
+  walletTransactions.unshift({
+    type: 'credit',
+    desc: 'Wallet Top-Up',
+    amount: amount,
+    date: new Date().toLocaleDateString('en-JM', { day:'numeric', month:'short', year:'numeric' })
+  });
+  updateWalletUI();
+  renderTransactions();
+  closeTopUpModal();
+
+  // Flash success message
+  const balEl = document.getElementById('walletBalanceDisplay');
+  if (balEl) {
+    balEl.style.transform = 'scale(1.08)';
+    setTimeout(() => { balEl.style.transform = ''; }, 300);
+  }
+}
+
+function payFromWallet(desc, amount) {
+  if (!currentUser) { showPage('login'); return; }
+  if (walletBalance < amount) {
+    alert('Insufficient wallet balance. Please top up your wallet first.\n\nRequired: ' + formatJMD(amount) + '\nAvailable: ' + formatJMD(walletBalance));
+    portalTab(document.querySelectorAll('.ptab')[4], 'wallet');
+    openTopUpModal();
+    return;
+  }
+  if (confirm('Pay ' + formatJMD(amount) + ' from your wallet for: ' + desc + '?\n\nBalance after payment: ' + formatJMD(walletBalance - amount))) {
+    walletBalance -= amount;
+    walletTransactions.unshift({
+      type: 'debit',
+      desc: desc,
+      amount: amount,
+      date: new Date().toLocaleDateString('en-JM', { day:'numeric', month:'short', year:'numeric' })
+    });
+    updateWalletUI();
+    renderTransactions();
+    alert('✅ Payment successful! ' + formatJMD(amount) + ' paid for ' + desc + '.');
+  }
+}
+
+function renderTransactions() {
+  const container = document.getElementById('walletTransactions');
+  if (!container) return;
+  if (walletTransactions.length === 0) {
+    container.innerHTML = '<p style="font-size:.875rem;color:var(--muted);text-align:center;padding:28px 0;">No transactions yet. Top up your wallet to get started.</p>';
+    return;
+  }
+  container.innerHTML = walletTransactions.slice(0, 8).map(tx => `
+    <div class="tx-item">
+      <div class="tx-left">
+        <div class="tx-icon ${tx.type}">${tx.type === 'credit' ? '＋' : '−'}</div>
+        <div>
+          <div class="tx-desc">${tx.desc}</div>
+          <div class="tx-date">${tx.date}</div>
+        </div>
+      </div>
+      <div class="tx-amount ${tx.type}">${tx.type === 'credit' ? '+' : '-'}${formatJMD(tx.amount)}</div>
+    </div>`).join('');
+}
+
+function showWalletHistory() {
+  portalTab(document.querySelectorAll('.ptab')[4], 'wallet');
+}
+
+/* -------- PAGE ROUTER -------- */
+let currentUser = null;
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'instant' }); }
+  document.querySelectorAll('#mainNav a').forEach(a => a.classList.remove('active-link'));
+  const map = { home: 0, about: 4 };
+  const idx = map[page];
+  if (idx !== undefined) {
+    const links = document.querySelectorAll('#mainNav a');
+    if (links[idx]) links[idx].classList.add('active-link');
+  }
+  if (page === 'portal') updatePortalGreeting();
+}
+
+function scrollToId(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 80);
+}
+
+/* -------- MOBILE MENU -------- */
+function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+function closeMobileMenu(e) {
+  if (!e || e.target === document.getElementById('mobileMenu')) {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+}
+
+/* -------- AUTH UI -------- */
+function updateAuthUI() {
+  const authBtns   = document.getElementById('navAuth');
+  const portalBtns = document.getElementById('navPortal');
+  const nameEl     = document.getElementById('navUsername');
+  if (currentUser) {
+    authBtns.classList.add('hidden');
+    portalBtns.classList.remove('hidden');
+    if (nameEl) nameEl.textContent = currentUser.name;
+  } else {
+    authBtns.classList.remove('hidden');
+    portalBtns.classList.add('hidden');
+  }
+}
+
+function logout() { currentUser = null; walletBalance = 0; walletTransactions = []; updateAuthUI(); showPage('home'); }
+
+/* -------- AUTH LOGIC -------- */
+function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+function showFieldError(f,e,m){const fi=document.getElementById(f),er=document.getElementById(e);if(fi)fi.classList.add('input-error');if(er){er.textContent=m;er.style.display='block';}}
+function clearFieldError(f,e){const fi=document.getElementById(f),er=document.getElementById(e);if(fi)fi.classList.remove('input-error');if(er)er.style.display='none';}
+
+function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  let valid   = true;
+  if (!isValidEmail(email)) { showFieldError('loginEmail','loginEmailErr','Please enter a valid email address.'); valid=false; } else clearFieldError('loginEmail','loginEmailErr');
+  if (!pass) { showFieldError('loginPass','loginPassErr','Please enter your password.'); valid=false; } else clearFieldError('loginPass','loginPassErr');
+  if (!valid) return;
+  const namePart = email.split('@')[0].replace(/[._-]/g,' ');
+  const name = namePart.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
+  currentUser = { name, email };
+  updateAuthUI();
+  showPage('portal');
+}
+
+function handleRegister() {
+  const first=document.getElementById('regFirst').value.trim(),last=document.getElementById('regLast').value.trim(),email=document.getElementById('regEmail').value.trim(),type=document.getElementById('regType').value,pass=document.getElementById('regPass').value,confirm=document.getElementById('regPassConfirm').value,terms=document.getElementById('regTerms').checked;
+  let valid=true;
+  if(!isValidEmail(email)){showFieldError('regEmail','regEmailErr','Please enter a valid email address.');valid=false;}else clearFieldError('regEmail','regEmailErr');
+  if(!type){showFieldError('regType','regTypeErr','Please select an account type.');valid=false;}else clearFieldError('regType','regTypeErr');
+  if(!pass||pass!==confirm){showFieldError('regPassConfirm','regPassErr',!pass?'Please create a password.':'Passwords do not match.');valid=false;}else clearFieldError('regPassConfirm','regPassErr');
+  if(!terms){document.getElementById('regTermsErr').style.display='block';valid=false;}else document.getElementById('regTermsErr').style.display='none';
+  if(!valid)return;
+  const fullName=[first,last].filter(Boolean).join(' ')||email.split('@')[0];
+  currentUser={name:fullName,email};
+  updateAuthUI();
+  showPage('portal');
+}
+
+function togglePass(inputId,btn){const inp=document.getElementById(inputId);if(!inp)return;if(inp.type==='password'){inp.type='text';btn.textContent='Hide';}else{inp.type='password';btn.textContent='Show';}}
+
+function checkPassStrength(value){
+  const bar=document.getElementById('passStrengthFill'),label=document.getElementById('passStrengthLabel');
+  if(!bar||!label)return;
+  let score=0;
+  if(value.length>=8)score++;if(/[A-Z]/.test(value))score++;if(/[0-9]/.test(value))score++;if(/[^A-Za-z0-9]/.test(value))score++;
+  const levels=[{w:'0%',c:'',t:'Enter a password'},{w:'25%',c:'#E53E3E',t:'Weak'},{w:'50%',c:'#F6AD55',t:'Fair'},{w:'75%',c:'#68D391',t:'Good'},{w:'100%',c:'#38A169',t:'Strong ✓'}];
+  bar.style.width=levels[score].w;bar.style.background=levels[score].c;label.textContent=levels[score].t;
+}
+
+/* -------- PORTAL -------- */
+function portalTab(btn, tabId) {
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.portal-tab-content').forEach(el => el.classList.remove('active'));
+  btn.classList.add('active');
+  const content = document.getElementById('ptab-' + tabId);
+  if (content) content.classList.add('active');
+}
+
+function updatePortalGreeting() {
+  const greetEl=document.getElementById('portalGreeting'),greetSubEl=document.getElementById('portalGreetingSub');
+  if(!greetEl)return;
+  const hour=new Date().getHours();
+  const tod=hour<12?'Good morning':hour<18?'Good afternoon':'Good evening';
+  const name=currentUser?', '+currentUser.name.split(' ')[0]:'';
+  greetEl.textContent=tod+name+'!';
+  if(greetSubEl)greetSubEl.textContent="Here's an overview of your IP portfolio.";
+  updateWalletUI();
+}
+
+/* -------- WIZARD -------- */
+const wizState={type:null,publicUse:null,international:null};
+let wizCurrentStep=1;
+const wizardResults={
+  brand:{title:'Trademark Registration Recommended',body:'A trademark gives you exclusive rights to your brand name, logo, or slogan in Jamaica. Since you\'re already trading, file as soon as possible to establish priority. Protection lasts 10 years and is renewable indefinitely.'},
+  invention:{title:'Patent Protection Recommended',body:'A patent grants you up to 20 years of exclusive rights to your invention. Consider filing a provisional patent application first — it protects you while you develop the full application and costs less upfront.'},
+  creative:{title:'Copyright (+ Optional Registration)',body:'Copyright arises automatically the moment you create an original work — no registration required. However, voluntary registration with JIPO strengthens your legal position and is strongly recommended for commercial music, art, software, or literary works.'},
+  design:{title:'Industrial Design Registration Recommended',body:'An industrial design registration protects the unique visual appearance of your product — its shape, pattern, or colour. Protection lasts up to 15 years and prevents counterfeit copies in Jamaica and potentially abroad.'},
+};
+function wizNext(step,value){
+  if(wizCurrentStep===1)wizState.type=value;if(wizCurrentStep===2)wizState.publicUse=value;if(wizCurrentStep===3)wizState.international=value;
+  wizCurrentStep=step;
+  document.querySelectorAll('.wizard-step').forEach(s=>s.classList.remove('active'));
+  const stepEl=document.getElementById('wstep'+step);if(stepEl)stepEl.classList.add('active');
+  const progress=document.getElementById('wizardProgress');if(progress)progress.style.width=(((step-1)/3)*100)+'%';
+}
+function wizResult(){
+  document.querySelectorAll('.wizard-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('wstep-result').classList.add('active');
+  const progress=document.getElementById('wizardProgress');if(progress)progress.style.width='100%';
+  const result=wizardResults[wizState.type]||wizardResults.brand;
+  document.getElementById('wizardResultTitle').textContent=result.title;
+  document.getElementById('wizardResultText').textContent=result.body;
+}
+function resetWizard(){
+  wizCurrentStep=1;wizState.type=null;wizState.publicUse=null;wizState.international=null;
+  document.querySelectorAll('.wizard-step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('wstep1').classList.add('active');
+  const progress=document.getElementById('wizardProgress');if(progress)progress.style.width='0%';
+}
+
+/* -------- APPLICATION TRACKER -------- */
+let sampleApplications={
+  'TM-2025-04821':{name:'Solar Sip™',type:'Trademark',filed:'14 January 2025',step:2},
+  'TM-2024-03210':{name:'Yardie Tech™',type:'Trademark',filed:'3 August 2024',step:4},
+  'PT-2024-00581':{name:'EcoFilter Device',type:'Patent',filed:'20 June 2024',step:1},
+  'TM-2023-09914':{name:'Kingston Konfidence',type:'Trademark',filed:'11 November 2023',step:4},
+};
+const timelineSteps=['Received','Formalities','Examination','Publication','Registered'];
+function trackApplication(){
+  const input=document.getElementById('trackInput'),result=document.getElementById('trackerResult');
+  if(!input||!result)return;
+  const ref=input.value.trim().toUpperCase();
+  const app=sampleApplications[ref];
+  if(!app){
+    result.style.display='block';
+    result.innerHTML='<div style="background:#FEF2F2;border-radius:var(--radius-md);padding:20px;color:#991B1B;font-size:.9rem">⚠️ No application found for reference <strong>'+ref+'</strong>. Please check your filing receipt and try again.</div>';
+    return;
+  }
+  const timelineHtml=timelineSteps.map((label,i)=>{const cls=i<app.step?'done':i===app.step?'active':'';return'<div class="tl-step"><div class="tl-dot '+cls+'"></div><div class="tl-label">'+label+'</div></div>';}).join('');
+  result.style.display='block';
+  result.innerHTML='<div class="tracker-status"><div class="status-label">'+app.type+' Application</div><div class="status-title">'+app.name+'</div><div style="font-size:.83rem;color:var(--muted);margin-top:4px">Filed: '+app.filed+'</div><div class="status-timeline" style="margin-top:20px">'+timelineHtml+'</div></div>';
+}
+
+/* -------- NEW APPLICATION (creates a trackable record) -------- */
+const typePrefix={ 'Trademark':'TM', 'Patent':'PT', 'Industrial Design':'ID', 'Copyright':'CR' };
+function newApplication(){
+  if(!currentUser){ showPage('login'); return; }
+  const name=prompt('Enter a name for your new application (e.g. your brand, invention, or work):');
+  if(!name||!name.trim())return;
+  let type=prompt('Enter the IP type — Trademark, Patent, Industrial Design, or Copyright:','Trademark');
+  if(!type)return;
+  type=type.trim().toLowerCase();
+  const typeMap={ 'trademark':'Trademark', 'patent':'Patent', 'industrial design':'Industrial Design', 'design':'Industrial Design', 'copyright':'Copyright' };
+  type=typeMap[type]||'Trademark';
+
+  // Generate a reference number
+  const prefix=typePrefix[type]||'TM';
+  const year=new Date().getFullYear();
+  const seq=String(Math.floor(10000+Math.random()*89999));
+  const ref=prefix+'-'+year+'-'+seq;
+
+  // Filed date
+  const now=new Date();
+  const filedShort=now.toLocaleDateString('en-JM',{day:'numeric',month:'short',year:'numeric'});
+  const filedLong=now.toLocaleDateString('en-JM',{day:'numeric',month:'long',year:'numeric'});
+
+  // Register it so it is trackable — step 0 = "Received"
+  sampleApplications[ref]={ name:name.trim(), type:type, filed:filedLong, step:0 };
+
+  // Add a row to the portal Applications table
+  const tbody=document.querySelector('#ptab-applications tbody');
+  if(tbody){
+    const tr=document.createElement('tr');
+    tr.innerHTML='<td>'+ref+'</td><td>'+name.trim()+'</td><td>'+type+'</td><td>'+filedShort+'</td>'+
+      '<td><span class="status-pill status-received">Received</span></td>'+
+      '<td><a href="#" class="table-action" onclick="trackFromPortal(\''+ref+'\');return false;">Track</a></td>';
+    tbody.insertBefore(tr,tbody.firstChild);
+  }
+
+  alert('✅ Application created!\n\nReference: '+ref+'\nName: '+name.trim()+'\nType: '+type+'\nStatus: Received\n\nYou can now track it under "Track Application" using this reference number.');
+}
+
+/* Jump to the public tracker and auto-fill a reference */
+function trackFromPortal(ref){
+  showPage('home');
+  setTimeout(()=>{
+    scrollToId('tracker-sec');
+    const input=document.getElementById('trackInput');
+    if(input){ input.value=ref; trackApplication(); }
+  },120);
+}
+
+/* -------- NEWS -------- */
+const newsData=[
+  {tag:'Events',title:'Innovation Week 2026',text:'Workshops and IP awareness events across Jamaica. Register to attend.'},
+  {tag:'Announcement',title:'New Online Filing System',text:'Submit trademarks and patents entirely online through the upgraded e-JIPO portal.'},
+  {tag:'Programme',title:'Young Innovators Fund',text:'JIPO supports students and entrepreneurs with IP education, mentorship and grants.'},
+  {tag:'Campaign',title:'Copyright Awareness Drive',text:'Nationwide campaign educating creators about automatic copyright and enforcement.'},
+  {tag:'Update',title:'MSMEs: IP Starter Pack',text:'Free templates, guides, and subsidised filing fees for small businesses.'},
+  {tag:'Update',title:'Digital Transformation',text:'JIPO is modernising services for faster online processing and certificate delivery.'},
+  {tag:'New Feature',title:'Account Wallets Now Live',text:'Load funds to your JIPO account and pay for all services directly from your wallet.'},
+];
+function loadNews(){
+  const track=document.getElementById('newsTrack');if(!track)return;
+  const looped=[...newsData,...newsData];
+  track.innerHTML=looped.map(n=>'<div class="news-card"><div class="news-tag">'+n.tag+'</div><h3>'+n.title+'</h3><p>'+n.text+'</p></div>').join('');
+}
+
+/* -------- NEWSLETTER -------- */
+function subscribeNewsletter(){
+  const emailInput=document.getElementById('nlEmail'),form=document.querySelector('.nl-form'),success=document.getElementById('nlSuccess');
+  if(!emailInput)return;
+  const email=emailInput.value.trim();
+  if(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){emailInput.style.border='2px solid #E53E3E';emailInput.focus();return;}
+  emailInput.style.border='';
+  if(form)form.style.display='none';if(success)success.style.display='block';
+}
+
+/* -------- CHATBOT -------- */
+let chatOpen=false;
+function toggleChat(){
+  chatOpen=!chatOpen;
+  const box=document.getElementById('chatbotBox');
+  if(box)box.style.display=chatOpen?'flex':'none';
+  if(chatOpen){const input=document.getElementById('userInput');if(input)input.focus();}
+}
+function sendMessage(){
+  const inputEl=document.getElementById('userInput'),msgs=document.getElementById('chatMessages');
+  if(!inputEl||!msgs)return;
+  const text=inputEl.value.trim();if(!text)return;
+  const userDiv=document.createElement('div');userDiv.className='user-message';userDiv.textContent=text;msgs.appendChild(userDiv);
+  inputEl.value='';msgs.scrollTop=msgs.scrollHeight;
+  const typing=document.createElement('div');typing.className='typing-indicator';typing.innerHTML='<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';msgs.appendChild(typing);msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    typing.remove();
+    const botDiv=document.createElement('div');botDiv.className='bot-message';botDiv.textContent=getBotReply(text);msgs.appendChild(botDiv);msgs.scrollTop=msgs.scrollHeight;
+  },900);
+}
+function getBotReply(input){
+  const i=input.toLowerCase();
+  if(/hello|hi|hey/.test(i))return"Hello! I'm the JIPO virtual assistant. Ask me about trademarks, patents, copyright, or how to file online.";
+  if(/wallet|balance|top.?up|fund|pay/.test(i))return"Your account wallet lets you pre-load funds to pay for any JIPO service instantly. Log in and go to the Wallet tab in your Client Portal to top up.";
+  if(/trademark/.test(i))return"Trademark registration protects your brand name, logo, or slogan. Registration starts at J$10,000 and lasts 10 years. Create a free account to start your application.";
+  if(/patent/.test(i))return"A patent protects your invention for up to 20 years. Filing fee starts at J$8,000. I recommend searching our database first to check for prior art.";
+  if(/copyright/.test(i))return"Copyright arises automatically when you create an original work. Voluntary registration with JIPO strengthens your legal position — especially for music, art, and software.";
+  if(/design/.test(i))return"Industrial design registration protects the unique visual appearance of your product. Protection lasts up to 15 years from J$8,000.";
+  if(/fee|cost|price|how much/.test(i))return"Fees: Trademark from J$10,000 · Patent from J$15,000 · Design from J$8,000 · Copyright from J$5,000. See the full Fee Schedule on our home page.";
+  if(/track|status|application|reference/.test(i))return"Enter your reference number (e.g. TM-2025-04821) in the Track Application section on the home page, or view all your applications in your Client Portal.";
+  if(/renew|renewal|expire/.test(i))return"Trademarks renew every 10 years. Log in to your Client Portal to see upcoming renewal dates. You can pay renewal fees directly from your wallet.";
+  if(/contact|phone|email|office/.test(i))return"JIPO is located at 18 Trafalgar Road, Kingston 10. Call +1 876-946-1114 or email info@jipo.gov.jm. Office hours: Mon–Fri, 8am–5pm.";
+  if(/thank/.test(i))return"You're welcome! Is there anything else I can help you with?";
+  return"I can help with trademarks, patents, copyright, industrial designs, fees, your wallet, and general IP questions in Jamaica. What would you like to know?";
+}
+
+/* -------- INIT -------- */
+document.addEventListener('DOMContentLoaded',()=>{
+  showPage('home');
+  updateAuthUI();
+  loadNews();
+  const nlEmail=document.getElementById('nlEmail');if(nlEmail)nlEmail.addEventListener('keypress',e=>{if(e.key==='Enter')subscribeNewsletter();});
+  const trackInput=document.getElementById('trackInput');if(trackInput)trackInput.addEventListener('keypress',e=>{if(e.key==='Enter')trackApplication();});
+  const regPass=document.getElementById('regPass');if(regPass)regPass.addEventListener('input',()=>checkPassStrength(regPass.value));
+  const sendBtn=document.getElementById('sendBtn');if(sendBtn)sendBtn.addEventListener('click',sendMessage);
+  const inputEl=document.getElementById('userInput');if(inputEl)inputEl.addEventListener('keypress',e=>{if(e.key==='Enter')sendMessage();});
+  const firstContent=document.getElementById('ptab-dashboard');if(firstContent)firstContent.classList.add('active');
+  // Close modal on overlay click
+  document.getElementById('topUpModal').addEventListener('click',function(e){if(e.target===this)closeTopUpModal();});
+});
+/* -------- SITE SEARCH -------- */
+const searchIndex = [
+  {cat:'Service', title:'Trademark Registration', desc:'Protect your brand name, logo, or slogan. Application J$5,000 · Registration J$10,000 · Renewal J$8,500.', go:()=>{showPage('home');scrollToId('services');}},
+  {cat:'Service', title:'Patent Protection', desc:'Exclusive rights to your invention for up to 20 years. Application J$8,000 · Registration J$15,000 · Renewal J$12,000.', go:()=>{showPage('home');scrollToId('services');}},
+  {cat:'Service', title:'Copyright Services', desc:'Voluntary registration for music, art, and writing. Application J$2,500 · Registration J$5,000.', go:()=>{showPage('home');scrollToId('services');}},
+  {cat:'Service', title:'Industrial Designs', desc:'Protect the visual appearance of your product. Application J$4,000 · Registration J$8,000 · Renewal J$6,500.', go:()=>{showPage('home');scrollToId('services');}},
+  {cat:'Service', title:'IP Search Database', desc:'Search existing trademarks, patents and designs. Basic search free · Certified report J$3,000.', go:()=>{showPage('home');scrollToId('services');}},
+  {cat:'Service', title:'IP Enforcement Guidance', desc:'Options when your rights are infringed. Advisory free · Opposition filing J$7,500.', go:()=>{showPage('home');scrollToId('services');}},
+  {cat:'Tool', title:'Should I Register? (IP Wizard)', desc:'Answer three questions to find the right IP protection for you.', go:()=>{showPage('home');scrollToId('wizard-sec');}},
+  {cat:'Tool', title:'Track Your Application', desc:'Enter your reference number for real-time application status.', go:()=>{showPage('home');scrollToId('tracker-sec');}},
+  {cat:'Account', title:'Account Wallet', desc:'Pre-load funds to pay for filing fees, renewals and services instantly.', go:()=>{currentUser?showPage('portal'):showPage('login');}},
+  {cat:'Page', title:'About JIPO', desc:'Our mission, history, leadership team and international affiliations.', go:()=>{showPage('about');}},
+  {cat:'Leadership', title:'Dr. Carla Reid — Director General', desc:'IP policy & strategy, international treaties, commercial law.', go:()=>{showPage('about');scrollToId('leadership-sec');}},
+  {cat:'Leadership', title:'Marcus Bennett — Patents & Designs', desc:'Patent examination, industrial designs, technical assessment.', go:()=>{showPage('about');scrollToId('leadership-sec');}},
+  {cat:'Leadership', title:'Simone Thompson — Trademarks & Copyright', desc:'Trademark law, copyright, creative sector and public outreach.', go:()=>{showPage('about');scrollToId('leadership-sec');}},
+  {cat:'FAQ', title:'How long does trademark registration take?', desc:'Examination takes 3–6 months; full process 8–12 months if no objections.', go:()=>{showPage('home');scrollToId('faq-sec');}},
+  {cat:'FAQ', title:'Do I need a lawyer to file a patent?', desc:'You can file yourself, but a registered patent attorney is recommended for complex inventions.', go:()=>{showPage('home');scrollToId('faq-sec');}},
+  {cat:'FAQ', title:'How do I load funds to my wallet?', desc:'Log in, open the Wallet tab, and top up by card, bank transfer or NCB QuickPay.', go:()=>{showPage('home');scrollToId('faq-sec');}},
+  {cat:'FAQ', title:'Can I register IP internationally?', desc:'Yes — Jamaica is part of the Paris Convention and PCT, covering 180+ countries.', go:()=>{showPage('home');scrollToId('faq-sec');}},
+  {cat:'Page', title:'Give Feedback / Rate Us', desc:'Rate your experience and share your feedback to help us improve.', go:()=>{showPage('home');scrollToId('feedback-sec');}},
+  {cat:'Action', title:'Create a Free Account', desc:'Register on e-JIPO to file and manage your applications online.', go:()=>{showPage('register');}},
+  {cat:'Action', title:'Log In to Client Portal', desc:'Access your applications, renewals, documents and wallet.', go:()=>{showPage('login');}},
+];
+
+function openSearch(){
+  const ov=document.getElementById('searchOverlay');
+  if(!ov)return;
+  ov.classList.add('open');
+  const inp=document.getElementById('siteSearchInput');
+  if(inp){inp.value='';inp.focus();}
+  renderSearchResults('');
+}
+function closeSearch(e){
+  // If invoked from overlay click, only close when the backdrop itself was clicked
+  if(e&&e.type==='click'&&e.target&&e.target.id!=='searchOverlay'&&!e.target.classList.contains('search-close'))return;
+  const ov=document.getElementById('searchOverlay');
+  if(ov)ov.classList.remove('open');
+}
+function renderSearchResults(query){
+  const box=document.getElementById('searchResults');
+  if(!box)return;
+  const q=query.trim().toLowerCase();
+  if(!q){box.innerHTML='<p class="search-hint">Start typing to search across the JIPO website.</p>';return;}
+  const matches=searchIndex.filter(item=>(item.title+' '+item.desc+' '+item.cat).toLowerCase().includes(q));
+  if(matches.length===0){box.innerHTML='<p class="search-empty">No results found for "<strong>'+query+'</strong>". Try another keyword.</p>';return;}
+  box.innerHTML=matches.map((m,i)=>'<button class="search-result" data-idx="'+searchIndex.indexOf(m)+'"><div class="sr-cat">'+m.cat+'</div><div class="sr-title">'+m.title+'</div><div class="sr-desc">'+m.desc+'</div></button>').join('');
+  box.querySelectorAll('.search-result').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item=searchIndex[parseInt(btn.dataset.idx)];
+      document.getElementById('searchOverlay').classList.remove('open');
+      if(item&&item.go)item.go();
+    });
+  });
+}
+
+/* -------- FEEDBACK & RATINGS -------- */
+let selectedRating=0;
+const ratingTexts=['Tap a star to rate','Poor','Fair','Good','Very Good','Excellent'];
+function initFeedback(){
+  const stars=document.querySelectorAll('#starRating .star');
+  const label=document.getElementById('ratingLabel');
+  stars.forEach(star=>{
+    star.addEventListener('mouseenter',()=>paintStars(stars,parseInt(star.dataset.value)));
+    star.addEventListener('mouseleave',()=>paintStars(stars,selectedRating));
+    star.addEventListener('click',()=>{
+      selectedRating=parseInt(star.dataset.value);
+      paintStars(stars,selectedRating);
+      if(label)label.textContent=ratingTexts[selectedRating];
+    });
+  });
+}
+function paintStars(stars,n){stars.forEach(s=>{s.classList.toggle('active',parseInt(s.dataset.value)<=n);});}
+function submitFeedback(){
+  const msg=document.getElementById('fbMessage');
+  const label=document.getElementById('ratingLabel');
+  if(selectedRating===0){if(label){label.textContent='Please select a rating first.';label.style.color='#E53E3E';}return;}
+  if(label)label.style.color='';
+  const form=document.getElementById('feedbackForm');
+  const success=document.getElementById('feedbackSuccess');
+  if(success)success.style.display='block';
+  // Reset inputs
+  const name=document.getElementById('fbName');
+  if(name)name.value='';
+  if(msg)msg.value='';
+  const stars=document.querySelectorAll('#starRating .star');
+  setTimeout(()=>{
+    selectedRating=0;paintStars(stars,0);
+    if(label)label.textContent=ratingTexts[0];
+  },400);
+}
+
+/* -------- SEARCH & FEEDBACK INIT (runs after DOM ready) -------- */
+document.addEventListener('DOMContentLoaded',()=>{
+  const ssi=document.getElementById('siteSearchInput');
+  if(ssi)ssi.addEventListener('input',e=>renderSearchResults(e.target.value));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){const ov=document.getElementById('searchOverlay');if(ov)ov.classList.remove('open');}});
+  initFeedback();
+});
+
+</script>
+</body>
+</html>
